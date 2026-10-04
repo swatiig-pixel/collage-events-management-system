@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card p-4">
+
+        <h2 class="mb-3">Change President</h2>
+
+        <p class="text-muted">
+            Current President:
+            <strong>{{ current_president.user.username }}</strong>
+        </p>
+
+        <hr>
+
+        <h5>Search Student</h5>
+
+        <form method="GET" class="mb-4">
+
+            <div class="input-group">
+
+                <input
+                    type="text"
+                    name="search"
+                    class="form-control"
+                    placeholder="Enter student name or USN"
+                    value="{{ request.GET.search|default:'' }}"
+                >
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Search
+                </button>
+
+            </div>
+
+        </form>
+
+
+        {% if students %}
+
+            <h5 class="mb-3">Search Results</h5>
+
+            {% for student in students %}
+
+                <div class="border rounded p-3 mb-3">
+
+                    <div class="fw-semibold">
+                        {{ student.name }}
+                    </div>
+
+                    <div class="text-muted">
+                        {{ student.usn }}
+                    </div>
+
+                    <div class="text-muted small">
+                        {{ student.branch }}
+                        {% if student.semester %}
+                            • Semester {{ student.semester }}
+                        {% endif %}
+                    </div>
+
+                    <div class="mt-2">
+
+                        <a
+                            href="{% url 'confirm_president_change' club.id student.id %}"
+                            class="btn btn-primary btn-sm"
+                        >
+                            Select as President
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% elif request.GET.search %}
+
+            <p class="text-muted">
+                No students found.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

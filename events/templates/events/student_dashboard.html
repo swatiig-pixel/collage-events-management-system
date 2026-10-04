@@ -1,0 +1,342 @@
+{% extends "base.html" %}
+
+{% block title %}
+    My Dashboard | CollegeEvents
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <!-- Header -->
+        <div class="mb-5">
+            <h1 class="display-6 fw-bold">
+                Welcome, {{ request.user.username }}
+            </h1>
+
+            <p class="text-muted">
+                Manage your registered college events from one place.
+            </p>
+        </div>
+
+
+        <!-- Statistics -->
+        <div class="row g-4 mb-5">
+
+            <div class="col-md-4">
+                <div class="dashboard-stat-card">
+                    <span class="dashboard-stat-label">
+                        Total Registrations
+                    </span>
+
+                    <h2>
+                        {{ total_registrations }}
+                    </h2>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="dashboard-stat-card">
+                    <span class="dashboard-stat-label">
+                        Upcoming Events
+                    </span>
+
+                    <h2>
+                        {{ upcoming_count }}
+                    </h2>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="dashboard-stat-card">
+                    <span class="dashboard-stat-label">
+                        Past Events
+                    </span>
+
+                    <h2>
+                        {{ past_count }}
+                    </h2>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Upcoming Events -->
+        <div class="mb-5">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div>
+                    <h2 class="h3 fw-bold mb-1">
+                        Upcoming Events
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Events you are registered for.
+                    </p>
+                </div>
+
+                <a href="{% url 'event_list' %}"
+                   class="btn btn-outline-primary">
+                    Browse Events
+                </a>
+
+            </div>
+
+
+            {% if upcoming_registrations %}
+
+                <div class="row g-4">
+
+                    {% for registration in upcoming_registrations %}
+
+                        <div class="col-12 col-sm-6 col-lg-4">
+
+                            <div class="card event-card h-100">
+
+                                <!-- Image -->
+                                {% if registration.event.image %}
+
+                                    <img src="{{ registration.event.image.url }}"
+                                         class="event-card-image"
+                                         alt="{{ registration.event.name }}">
+
+                                {% else %}
+
+                                    <div class="event-card-image event-image-placeholder d-flex align-items-center justify-content-center">
+                                        <span>Event Image</span>
+                                    </div>
+
+                                {% endif %}
+
+
+                                <!-- Content -->
+                                <div class="card-body d-flex flex-column">
+
+                                    <span class="event-category mb-2">
+                                        {{ registration.event.category.name }}
+                                    </span>
+
+                                    <h5 class="event-card-title">
+                                        {{ registration.event.name }}
+                                    </h5>
+
+                                    <p class="event-card-description">
+                                        {{ registration.event.description|truncatewords:15 }}
+                                    </p>
+
+
+                                    <div class="event-info mb-3">
+
+                                        <p class="mb-1">
+                                            <strong>Club:</strong>
+                                            {{ registration.event.club.name }}
+                                        </p>
+
+                                        <p class="mb-1">
+                                            <strong>Date:</strong>
+                                            {{ registration.event.date }}
+                                        </p>
+
+                                        <p class="mb-1">
+                                            <strong>Time:</strong>
+                                            {{ registration.event.start_time }}
+                                            -
+                                            {{ registration.event.end_time }}
+                                        </p>
+
+                                        <p class="mb-0">
+                                            <strong>Venue:</strong>
+                                            {{ registration.event.venue.name }}
+                                        </p>
+
+                                    </div>
+
+
+                                    <!-- Status -->
+                                    <div class="event-meta mb-3">
+
+                                        <span class="event-registration">
+                                            ✓ Registered
+                                        </span>
+
+                                        {% if registration.event.registration_fee == 0 %}
+
+                                            <span class="event-free">
+                                                Free
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="event-fee">
+                                                ₹{{ registration.event.registration_fee }}
+                                            </span>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    <a href="{% url 'event_detail' registration.event.id %}"
+                                       class="btn btn-primary mt-auto">
+                                        View Event
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="dashboard-empty">
+
+                    <h3>
+                        No upcoming events
+                    </h3>
+
+                    <p>
+                        You haven't registered for any upcoming events.
+                    </p>
+
+                    <a href="{% url 'event_list' %}"
+                       class="btn btn-primary">
+                        Explore Events
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- Past Events -->
+        <div>
+
+            <div class="mb-4">
+
+                <h2 class="h3 fw-bold mb-1">
+                    Past Events
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Events you previously registered for.
+                </p>
+
+            </div>
+
+
+            {% if past_registrations %}
+
+                <div class="row g-4">
+
+                    {% for registration in past_registrations %}
+
+                        <div class="col-12 col-sm-6 col-lg-4">
+
+                            <div class="card event-card h-100">
+
+                                {% if registration.event.image %}
+
+                                    <img src="{{ registration.event.image.url }}"
+                                         class="event-card-image"
+                                         alt="{{ registration.event.name }}">
+
+                                {% else %}
+
+                                    <div class="event-card-image event-image-placeholder d-flex align-items-center justify-content-center">
+                                        <span>Event Image</span>
+                                    </div>
+
+                                {% endif %}
+
+
+                                <div class="card-body d-flex flex-column">
+
+                                    <span class="event-category mb-2">
+                                        {{ registration.event.category.name }}
+                                    </span>
+
+                                    <h5 class="event-card-title">
+                                        {{ registration.event.name }}
+                                    </h5>
+
+                                    <p class="event-card-description">
+                                        {{ registration.event.description|truncatewords:15 }}
+                                    </p>
+
+
+                                    <div class="event-info mb-3">
+
+                                        <p class="mb-1">
+                                            <strong>Club:</strong>
+                                            {{ registration.event.club.name }}
+                                        </p>
+
+                                        <p class="mb-1">
+                                            <strong>Date:</strong>
+                                            {{ registration.event.date }}
+                                        </p>
+
+                                        <p class="mb-0">
+                                            <strong>Venue:</strong>
+                                            {{ registration.event.venue.name }}
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="event-meta mb-3">
+
+                                        <span class="event-registration">
+                                            Registered
+                                        </span>
+
+                                        <span class="event-fee">
+                                            Event Completed
+                                        </span>
+
+                                    </div>
+
+
+                                    <a href="{% url 'event_detail' registration.event.id %}"
+                                       class="btn btn-outline-primary mt-auto">
+                                        View Event
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <p class="text-muted">
+                    No past events.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit Member | {{ club.name }}
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+                <h1 class="display-6 fw-bold">
+                    Edit Member
+                </h1>
+
+                <p class="text-muted mb-0">
+                    {{ club.name }}
+                </p>
+            </div>
+
+            <a href="{% url 'manage_members' club.id %}"
+               class="btn btn-outline-secondary">
+                Back to Members
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-body p-4">
+
+                <h2 class="h5 fw-bold mb-4">
+                    {{ member.user.username }}
+                </h2>
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+                            User
+                        </label>
+
+                        {{ form.user }}
+
+                    </div>
+
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+                            Position
+                        </label>
+
+                        {{ form.position }}
+
+                    </div>
+
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Save Changes
+                    </button>
+
+                    <a href="{% url 'manage_members' club.id %}"
+                       class="btn btn-outline-secondary ms-2">
+                        Cancel
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

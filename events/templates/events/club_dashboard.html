@@ -1,0 +1,385 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Club Dashboard | CollegeEvents
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <!-- Header -->
+        <div class="mb-5">
+
+            <h1 class="display-6 fw-bold">
+                Club Dashboard
+            </h1>
+
+            <p class="text-muted">
+                Manage your clubs and their events.
+            </p>
+
+        </div>
+
+
+        {% if clubs %}
+
+            {% for club in clubs %}
+
+                <!-- Club Section -->
+                <div class="club-dashboard-card mb-5">
+
+                    <div class="club-dashboard-header">
+
+                        <div class="d-flex align-items-center gap-3">
+
+                            {% if club.logo %}
+
+                                <img src="{{ club.logo.url }}"
+                                     class="club-dashboard-logo"
+                                     alt="{{ club.name }} logo">
+
+                            {% else %}
+
+                                <div class="club-dashboard-logo club-logo-placeholder">
+                                    Logo
+                                </div>
+
+                            {% endif %}
+
+
+                            <div>
+
+                                <span class="club-role-badge">
+                                    Core Member
+                                </span>
+
+                                <h2 class="club-dashboard-name">
+                                    {{ club.name }}
+                                </h2>
+
+                                {% if club.user_is_president  %}
+                                    <a href="{% url 'manage_members' club.id %}" class="btn btn-primary">
+                                        Manage Members
+                                    </a>
+                                {% endif %}
+
+                                <p class="club-dashboard-description">
+                                    {{ club.description }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <a href="{% url 'create_event' club.id %}"
+                           class="btn btn-primary">
+
+                            + Create Event
+
+                        </a>
+
+                        {% if club.user_role == "PRESIDENT" %}
+
+                            <a href="{% url 'manage_members' club.id %}"
+                            class="btn btn-outline-primary">
+
+                                Manage Members
+
+                            </a>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                    <hr>
+
+                    {% if club.user_is_president %}
+                        <a href="{% url 'change_president' club.id %}"
+                            class="btn btn-primary">
+                                Change President
+                        </a>
+                    {% endif %}
+
+
+
+                    <!-- Events -->
+                    <div>
+
+                        <div class="d-flex justify-content-between
+                                    align-items-center mb-4">
+
+                            <div>
+
+                                <h3 class="h4 fw-bold mb-1">
+                                    Your Events
+                                </h3>
+
+                                <p class="text-muted mb-0">
+                                    Events organized by {{ club.name }}.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="row g-4">
+
+                            {% for event in club.event_set.all %}
+
+                                <div class="col-12 col-sm-6 col-lg-4">
+
+                                    <div class="card event-card h-100">
+
+                                        <!-- Image -->
+
+                                        {% if event.image %}
+
+                                            <img src="{{ event.image.url }}"
+                                                 class="event-card-image"
+                                                 alt="{{ event.name }}">
+
+                                        {% else %}
+
+                                            <div class="event-card-image event-image-placeholder d-flex align-items-center justify-content-center">
+
+                                                <span>
+                                                    Event Image
+                                                </span>
+
+                                            </div>
+
+                                        {% endif %}
+
+
+                                        <!-- Content -->
+
+                                        <div class="card-body d-flex flex-column">
+
+                                            <span class="event-category mb-2">
+                                                {{ event.category.name }}
+                                            </span>
+
+
+                                            <h5 class="event-card-title">
+                                                {{ event.name }}
+                                            </h5>
+
+
+                                            <p class="event-card-description">
+                                                {{ event.description|truncatewords:15 }}
+                                            </p>
+
+
+                                            <div class="event-info mb-3">
+
+                                                <p class="mb-1">
+                                                    <strong>Date:</strong>
+                                                    {{ event.date }}
+                                                </p>
+
+                                                <p class="mb-1">
+                                                    <strong>Time:</strong>
+                                                    {{ event.start_time }}
+                                                    -
+                                                    {{ event.end_time }}
+                                                </p>
+
+                                                <p class="mb-1">
+                                                    <strong>Venue:</strong>
+                                                    {{ event.venue.name }}
+                                                </p>
+
+                                                <p class="mb-0">
+                                                    <strong>Participants:</strong>
+                                                    {{ event.participants }}
+                                                </p>
+
+                                            </div>
+
+
+                                            <!-- Registration -->
+
+                                            <div class="registration-progress mb-3">
+
+                                                <div class="d-flex justify-content-between mb-1">
+
+                                                    <small>
+                                                        Registrations
+                                                    </small>
+
+                                                    <small>
+                                                        {{ event.registration_count }}
+                                                        /
+                                                        {{ event.participants }}
+                                                    </small>
+
+                                                </div>
+
+
+                                                <div class="progress"
+                                                     role="progressbar"
+                                                     aria-valuemin="0"
+                                                     aria-valuemax="{{ event.participants }}"
+                                                     aria-valuenow="{{ event.registration_count }}">
+
+                                                    <div class="progress-bar"
+                                                         style="width: {% widthratio event.registration_count event.participants 100 %}%;">
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <!-- Fee -->
+
+                                            <div class="event-meta mb-3">
+
+                                                {% if event.registration_fee == 0 %}
+
+                                                    <span class="event-free">
+                                                        Free
+                                                    </span>
+
+                                                {% else %}
+
+                                                    <span class="event-fee">
+                                                        ₹{{ event.registration_fee }}
+                                                    </span>
+
+                                                {% endif %}
+
+                                            </div>
+
+
+                                            <!-- Event Status -->
+
+                                            <div class="mb-3">
+
+                                                {% if event.event_status == "Upcoming" %}
+
+                                                    <span class="badge bg-success">
+                                                        Upcoming
+                                                    </span>
+
+                                                {% elif event.event_status == "Ongoing" %}
+
+                                                    <span class="badge bg-warning text-dark">
+                                                        Ongoing
+                                                    </span>
+
+                                                {% elif event.event_status == "Completed" %}
+
+                                                    <span class="badge bg-secondary">
+                                                        Completed
+                                                    </span>
+
+                                                {% endif %}
+
+                                            </div>
+
+
+                                            <!-- Actions -->
+
+                                            <div class="d-flex gap-2 flex-wrap mt-auto">
+
+                                                <a href="{% url 'event_detail' event.id %}" 
+                                                class="btn btn-sm btn-outline-primary">
+
+                                                    View
+
+                                                </a>
+
+
+                                                {% if event.event_status == "Upcoming" %}
+
+                                                    <a href="{% url 'edit_event' event.id %}" 
+                                                    class="btn btn-sm btn-outline-primary">
+
+                                                        Edit
+
+                                                    </a>
+
+
+                                                    <a href="{% url 'delete_event' event.id %}" 
+                                                    class="btn btn-sm btn-outline-danger">
+
+                                                        Delete
+
+                                                    </a>
+
+                                                {% endif %}
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            {% empty %}
+
+                                <div class="col-12">
+
+                                    <div class="dashboard-empty">
+
+                                        <h3>
+                                            No events yet
+                                        </h3>
+
+                                        <p>
+                                            Create your first event for this club.
+                                        </p>
+
+                                        <a href="{% url 'create_event' club.id %}"
+                                           class="btn btn-primary">
+
+                                            Create Event
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+            <div class="dashboard-empty">
+
+                <h3>
+                    No clubs available
+                </h3>
+
+                <p>
+                    You are not a core member of any club.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

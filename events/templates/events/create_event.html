@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Create Event | CollegeEvents
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <h1 class="h3 fw-bold mb-1">
+                            Create Event
+                        </h1>
+
+                        <p class="text-muted mb-4">
+                            Create an event for {{ club.name }}
+                        </p>
+
+                        <form method="post" enctype="multipart/form-data">
+
+                            {% csrf_token %}
+
+                            {% for field in form %}
+
+                                <div class="mb-3">
+
+                                    <label for="{{ field.id_for_label }}"
+                                           class="form-label">
+                                        {{ field.label }}
+                                    </label>
+
+                                    {{ field }}
+
+                                    {% if field.help_text %}
+                                        <div class="form-text">
+                                            {{ field.help_text }}
+                                        </div>
+                                    {% endif %}
+
+                                    {% for error in field.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {{ error }}
+                                        </div>
+                                    {% endfor %}
+
+                                </div>
+
+                            {% endfor %}
+
+                            {% if form.non_field_errors %}
+
+                                <div class="alert alert-danger">
+                                    {% for error in form.non_field_errors %}
+                                        <div>{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+
+                            {% endif %}
+
+                            <div class="d-flex gap-2 mt-4">
+
+                                <button type="submit"
+                                        class="btn btn-primary">
+                                    Create Event
+                                </button>
+
+                                <a href="{% url 'club_dashboard' %}"
+                                   class="btn btn-outline-secondary">
+                                    Cancel
+                                </a>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+
+    const registrationType = document.getElementById(
+        "id_registration_type"
+    );
+
+    const registrationLinkField = document.getElementById(
+        "id_registration_link"
+    );
+
+    const registrationLinkContainer =
+        registrationLinkField.closest(".mb-3");
+
+
+    function toggleRegistrationLink() {
+
+        if (registrationType.value === "EXTERNAL") {
+
+            registrationLinkContainer.style.display = "block";
+
+        } else {
+
+            registrationLinkContainer.style.display = "none";
+
+            registrationLinkField.value = "";
+
+        }
+
+    }
+
+
+    registrationType.addEventListener(
+        "change",
+        toggleRegistrationLink
+    );
+
+
+    toggleRegistrationLink();
+
+</script>
+
+{% endblock %}

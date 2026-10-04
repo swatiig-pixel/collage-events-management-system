@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card p-4">
+
+        <h2 class="mb-3">Confirm President Change</h2>
+
+        <p>
+            You are about to make the following student the new
+            <strong>President</strong> of
+            <strong>{{ club.name }}</strong>.
+        </p>
+
+        <hr>
+
+        <div class="mb-3">
+            <strong>Name:</strong>
+            {{ student.name }}
+        </div>
+
+        <div class="mb-3">
+            <strong>USN:</strong>
+            {{ student.usn }}
+        </div>
+
+        <div class="mb-3">
+            <strong>Branch:</strong>
+            {{ student.branch }}
+        </div>
+
+        {% if student.semester %}
+            <div class="mb-3">
+                <strong>Semester:</strong>
+                {{ student.semester }}
+            </div>
+        {% endif %}
+
+        {% if existing_member %}
+
+            <div class="alert alert-info">
+                This student is already a member of
+                <strong>{{ club.name }}</strong>.
+            </div>
+
+        {% else %}
+
+            <div class="alert alert-warning">
+                This student is not currently a member of
+                <strong>{{ club.name }}</strong>.
+                They will be added as a Core Member and President.
+            </div>
+
+        {% endif %}
+
+
+        <hr>
+
+        <form
+            method="POST"
+            action="{% url 'confirm_president_change' club.id student.id %}"
+        >
+
+            {% csrf_token %}
+
+            <h5 class="mb-3">
+                What should happen to the current President?
+            </h5>
+
+
+            <div class="form-check mb-2">
+
+                <input
+                    class="form-check-input"
+                    type="radio"
+                    name="old_president_action"
+                    id="keep_core"
+                    value="CORE"
+                    checked
+                >
+
+                <label
+                    class="form-check-label"
+                    for="keep_core"
+                >
+                    Keep as Core Member
+                </label>
+
+            </div>
+
+
+            <div class="form-check mb-2">
+
+                <input
+                    class="form-check-input"
+                    type="radio"
+                    name="old_president_action"
+                    id="make_member"
+                    value="MEMBER"
+                >
+
+                <label
+                    class="form-check-label"
+                    for="make_member"
+                >
+                    Make Regular Member
+                </label>
+
+            </div>
+
+
+            <div class="form-check mb-4">
+
+                <input
+                    class="form-check-input"
+                    type="radio"
+                    name="old_president_action"
+                    id="remove_member"
+                    value="REMOVE"
+                >
+
+                <label
+                    class="form-check-label"
+                    for="remove_member"
+                >
+                    Remove from Club
+                </label>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Confirm Change
+            </button>
+
+
+            <a
+                href="{% url 'change_president' club.id %}"
+                class="btn btn-outline-secondary ms-2"
+            >
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}
+    No Active Club Term
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-7 col-lg-6">
+
+                <div class="card">
+
+                    <div class="card-body p-4 text-center">
+
+                        <h1 class="h4 fw-bold mb-3">
+                            No Active Club Term
+                        </h1>
+
+                        <p class="text-muted mb-4">
+                            No active committee term has been configured
+                            for {{ club.name }}.
+                        </p>
+
+                        <a
+                            href="{% url 'manage_members' club.id %}"
+                            class="btn btn-primary">
+                            Back to Members
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

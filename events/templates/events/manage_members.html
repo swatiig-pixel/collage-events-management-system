@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Manage Members | {{ club.name }}
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+                <h1 class="display-6 fw-bold">
+                    Manage Members
+                </h1>
+
+                <p class="text-muted mb-0">
+                    {{ club.name }}
+                </p>
+            </div>
+
+            <a href="{% url 'club_dashboard' %}"
+               class="btn btn-outline-secondary">
+                Back to Dashboard
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-body p-4">
+
+                <h2 class="h5 fw-bold mb-4">
+                    Club Members
+                </h2>
+
+                <div class="mb-4">
+
+                    <h2 class="h5 fw-bold mb-3">
+                        Add Core Member
+                    </h2>
+
+                    <form method="get">
+
+                        <div class="row g-3 align-items-end">
+
+                            <div class="col-md-10">
+
+                                <label class="form-label fw-semibold">
+                                    Student Name or USN
+                                </label>
+
+                                {{ search_form.search }}
+
+                            </div>
+
+                            <div class="col-md-2">
+
+                                <button type="submit"
+                                        class="btn btn-primary w-100">
+                                    Search
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                {% if students is not None %}
+
+                    <div class="mb-4">
+
+                        <h3 class="h6 fw-bold mb-3">
+                            Search Results
+                        </h3>
+
+                        {% if students %}
+
+                            <div class="list-group">
+
+                                {% for student in students %}
+
+                                    <div class="list-group-item">
+
+                                        <div class="d-flex justify-content-between align-items-center">
+
+                                            <div>
+
+                                                <div class="fw-semibold">
+                                                    {{ student.name }}
+                                                </div>
+
+                                                <div class="text-muted small">
+
+                                                    {{ student.usn }}
+
+                                                    {% if student.branch %}
+                                                        • {{ student.branch }}
+                                                    {% endif %}
+
+                                                    {% if student.semester %}
+                                                        • Semester {{ student.semester }}
+                                                    {% endif %}
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <a href="{% url 'add_core_member' club.id student.id %}"
+                                            class="btn btn-sm btn-primary">
+
+                                                Add
+
+                                            </a>
+
+                                        </div>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% else %}
+
+                            <p class="text-muted mb-0">
+                                No student found.
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+                    <hr class="mb-4">
+
+                {% endif %}
+
+                    
+
+                {% if members %}
+
+                    <div class="table-responsive">
+
+                        <table class="table align-middle">
+
+                            <thead>
+
+                                <tr>
+                                    <th>User</th>
+                                    <th>Membership</th>
+                                    <th>Position</th>
+                                    <th>Action</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {% for member in members %}
+
+                                    <tr>
+
+                                        <td>
+                                            <strong>
+                                                {{ member.user.username }}
+                                            </strong>
+                                        </td>
+                                            <td>
+
+                                            {% if member.is_president %}
+
+                                                <span class="badge text-bg-primary">
+                                                    President
+                                                </span>
+
+                                            {% elif member.membership_type == "CORE" %}
+
+                                                <span class="badge text-bg-success">
+                                                    Core Member
+                                                </span>
+
+                                            {% else %}
+
+                                                <span class="badge text-bg-secondary">
+                                                    Member
+                                                </span>
+
+                                            {% endif %}
+
+                                        </td>
+
+                                        <td>
+
+                                            {% if member.position %}
+                                                {{ member.position }}
+                                            {% else %}
+                                                —
+                                            {% endif %}
+
+                                        </td>
+
+                                        <td>
+
+                                            {% if not member.is_president %}
+
+                                                <a href="{% url 'edit_member' club.id member.id %}"
+                                                class="btn btn-sm btn-outline-primary">
+                                                    Edit
+                                                </a>
+
+                                                <a href="{% url 'remove_member' club.id member.id %}"
+                                                    class="btn btn-sm btn-outline-danger">
+                                                        Remove
+                                                    </a>
+
+
+
+                                            {% endif %}
+
+                                        </td>
+
+                                        
+
+                                    </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                {% else %}
+
+                    <p class="text-muted">
+                        No members found.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,2358 @@
+/* =========================================================
+   THEME VARIABLES
+   ========================================================= */
+
+:root {
+    --bg-color: #E9F5BE;
+    --card-color: #c8e8bf;
+    --secondary-color: #81E7AF;
+    --primary-color: #03A791;
+    --text-color: #173B35;
+
+    /* Animated waves */
+    --wave-1: #03A791;
+    --wave-2: #81E7AF;
+    --wave-3: #F1BA88;
+
+    --wave-opacity-1: 0.16;
+    --wave-opacity-2: 0.28;
+    --wave-opacity-3: 0.20;
+}
+
+[data-theme="dark"] {
+    --bg-color: #2C2C2C;
+    --card-color: #522546;
+    --secondary-color: #88304E;
+    --primary-color: #F7374F;
+    --text-color: #F5F5F5;
+
+    /* Dark animated waves */
+    --wave-1: #522546;
+    --wave-2: #88304E;
+    --wave-3: #F7374F;
+
+    --wave-opacity-1: 0.25;
+    --wave-opacity-2: 0.35;
+    --wave-opacity-3: 0.20;
+}
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: "Patrick Hand", cursive;
+    font-size: 17px;
+    line-height: 1.65;
+    letter-spacing: 0.5px;
+    overflow-x: hidden;
+}
+
+
+/* Handwritten typography */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+}
+
+
+/* Buttons */
+
+.btn {
+    letter-spacing: 0.3px;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.custom-navbar {
+    background-color: var(--primary-color) !important;
+    position: relative;
+    z-index: 1000 !important;
+}
+
+.custom-navbar .navbar-brand {
+    color: #ffffff !important;
+}
+
+.custom-navbar .nav-link {
+    color: #ffffff !important;
+    background-color: transparent !important;
+    transition: color 0.2s ease;
+}
+
+.custom-navbar .nav-link:hover,
+.custom-navbar .nav-link:focus,
+.custom-navbar .nav-link:active {
+    color: #E9F5BE !important;
+    background-color: transparent !important;
+}
+
+
+/* Dropdown username */
+
+.custom-navbar .dropdown {
+    position: relative;
+    z-index: 1100;
+}
+
+.custom-navbar .dropdown-toggle {
+    color: #ffffff !important;
+    background-color: transparent !important;
+}
+
+.custom-navbar .dropdown-toggle:hover,
+.custom-navbar .dropdown-toggle:focus {
+    color: #E9F5BE !important;
+    background-color: transparent !important;
+}
+
+.custom-navbar .dropdown-menu {
+    position: absolute;
+    z-index: 1100 !important;
+}
+
+.custom-navbar .navbar-nav {
+    position: relative;
+    z-index: 1100;
+}
+
+
+/* Mobile menu button */
+
+.custom-navbar .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.custom-navbar .navbar-toggler:focus {
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   THEME TOGGLE SWITCH
+   ========================================================= */
+
+.theme-switch {
+    width: 52px;
+    height: 28px;
+
+    border: none;
+    border-radius: 20px;
+
+    background-color: var(--secondary-color);
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 3px;
+
+    cursor: pointer;
+
+    transition: background-color 0.3s ease;
+}
+
+.theme-switch::before {
+    content: "";
+
+    width: 22px;
+    height: 22px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background-color: white;
+
+    transition: transform 0.3s ease;
+}
+
+
+/* Dark mode switch */
+
+[data-theme="dark"] .theme-switch {
+    background-color: var(--secondary-color);
+}
+
+[data-theme="dark"] .theme-switch::before {
+    transform: translateX(24px);
+}
+
+
+/* Switch hover */
+
+.theme-switch:hover {
+    opacity: 0.9;
+}
+
+
+/* Theme icon */
+
+#themeIcon {
+    position: absolute;
+
+    width: 52px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+
+    font-size: 15px;
+
+    pointer-events: none;
+    z-index: 2;
+
+    transition: justify-content 0.3s ease;
+
+    justify-content: flex-start;
+    padding-left: 5px;
+}
+
+
+/* Dark icon position */
+
+[data-theme="dark"] #themeIcon {
+    justify-content: flex-end;
+    padding-right: 12px;
+}
+
+
+/* =========================================================
+   GENERAL CARD
+   ========================================================= */
+
+.card {
+    background-color: var(--card-color);
+    color: var(--text-color);
+
+    line-height: 1.6;
+
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-text {
+    color: var(--text-color) !important;
+}
+
+
+/* Club logo inside cards */
+
+.card .club-logo {
+    border-radius: 16px 0 0 16px;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: white !important;
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white !important;
+}
+
+
+/* =========================================================
+   SMALL LABELS / BADGES
+   ========================================================= */
+
+.event-category,
+.event-registration,
+.event-free,
+.event-fee,
+.event-status,
+.club-role-badge {
+    letter-spacing: 0.4px;
+}
+
+
+/* =========================================================
+   ANIMATED ORGANIC BACKGROUND
+   ========================================================= */
+
+.animated-waves {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+/* Keep website content above waves */
+
+.custom-navbar,
+main,
+.custom-footer {
+    position: relative;
+    z-index: 2;
+}
+
+
+/* Base wave */
+
+.wave {
+    position: absolute;
+
+    pointer-events: none;
+
+    will-change: transform, border-radius;
+
+    filter: blur(0.2px);
+}
+
+
+/* =========================================================
+   TOP WAVES
+   ========================================================= */
+
+.wave-top {
+    top: -170px;
+}
+
+
+/* Large back layer */
+
+.wave-top-1 {
+    width: 720px;
+    height: 360px;
+
+    left: -100px;
+
+    background: var(--wave-2);
+    opacity: var(--wave-opacity-1);
+
+    border-radius:
+        48% 52% 65% 35%
+        /
+        45% 38% 62% 55%;
+
+    transform: rotate(-7deg);
+
+    animation:
+        topWaveFloat 12s ease-in-out infinite alternate,
+        topWaveMorph 9s ease-in-out infinite alternate;
+}
+
+
+/* Middle layer */
+
+.wave-top-2 {
+    width: 650px;
+    height: 330px;
+
+    right: -150px;
+    top: -130px;
+
+    background: var(--wave-3);
+    opacity: var(--wave-opacity-2);
+
+    border-radius:
+        60% 40% 45% 55%
+        /
+        40% 55% 45% 60%;
+
+    transform: rotate(12deg);
+
+    animation:
+        topWaveFloatReverse 15s ease-in-out infinite alternate,
+        topWaveMorph 11s ease-in-out infinite alternate-reverse;
+}
+
+
+/* Front teal layer */
+
+.wave-top-3 {
+    width: 500px;
+    height: 260px;
+
+    left: 25%;
+    top: -180px;
+
+    background: var(--wave-1);
+    opacity: var(--wave-opacity-3);
+
+    border-radius:
+        45% 55% 60% 40%
+        /
+        55% 40% 60% 45%;
+
+    animation:
+        topWaveDrift 13s ease-in-out infinite alternate,
+        topWaveMorph 8s ease-in-out infinite alternate;
+}
+
+
+/* =========================================================
+   BOTTOM WAVES
+   ========================================================= */
+
+.wave-bottom {
+    bottom: -190px;
+}
+
+
+/* Large bottom mint shape */
+
+.wave-bottom-1 {
+    width: 750px;
+    height: 360px;
+
+    left: -140px;
+
+    background: var(--wave-2);
+    opacity: var(--wave-opacity-1);
+
+    border-radius:
+        55% 45% 35% 65%
+        /
+        40% 55% 45% 60%;
+
+    transform: rotate(8deg);
+
+    animation:
+        bottomWaveFloat 14s ease-in-out infinite alternate,
+        bottomWaveMorph 10s ease-in-out infinite alternate;
+}
+
+
+/* Peach layer */
+
+.wave-bottom-2 {
+    width: 650px;
+    height: 330px;
+
+    right: -130px;
+    bottom: -170px;
+
+    background: var(--wave-3);
+    opacity: var(--wave-opacity-2);
+
+    border-radius:
+        42% 58% 65% 35%
+        /
+        55% 45% 60% 40%;
+
+    transform: rotate(-8deg);
+
+    animation:
+        bottomWaveFloatReverse 16s ease-in-out infinite alternate,
+        bottomWaveMorph 12s ease-in-out infinite alternate-reverse;
+}
+
+
+/* Teal front layer */
+
+.wave-bottom-3 {
+    width: 500px;
+    height: 250px;
+
+    left: 30%;
+    bottom: -160px;
+
+    background: var(--wave-1);
+    opacity: var(--wave-opacity-3);
+
+    border-radius:
+        60% 40% 50% 50%
+        /
+        45% 60% 40% 55%;
+
+    animation:
+        bottomWaveDrift 12s ease-in-out infinite alternate,
+        bottomWaveMorph 9s ease-in-out infinite alternate;
+}
+
+
+/* =========================================================
+   TOP WAVE ANIMATIONS
+   ========================================================= */
+
+@keyframes topWaveFloat {
+    0% {
+        transform: translateX(-30px) rotate(-7deg);
+    }
+
+    100% {
+        transform: translateX(80px) rotate(3deg);
+    }
+}
+
+@keyframes topWaveFloatReverse {
+    0% {
+        transform: translateX(50px) rotate(12deg);
+    }
+
+    100% {
+        transform: translateX(-70px) rotate(4deg);
+    }
+}
+
+@keyframes topWaveDrift {
+    0% {
+        transform: translateX(-20px) translateY(10px);
+    }
+
+    100% {
+        transform: translateX(100px) translateY(45px);
+    }
+}
+
+
+/* =========================================================
+   BOTTOM WAVE ANIMATIONS
+   ========================================================= */
+
+@keyframes bottomWaveFloat {
+    0% {
+        transform: translateX(-30px) rotate(8deg);
+    }
+
+    100% {
+        transform: translateX(70px) rotate(-3deg);
+    }
+}
+
+@keyframes bottomWaveFloatReverse {
+    0% {
+        transform: translateX(50px) rotate(-8deg);
+    }
+
+    100% {
+        transform: translateX(-70px) rotate(5deg);
+    }
+}
+
+@keyframes bottomWaveDrift {
+    0% {
+        transform: translateX(-20px) translateY(10px);
+    }
+
+    100% {
+        transform: translateX(90px) translateY(-30px);
+    }
+}
+
+
+/* =========================================================
+   ORGANIC MORPHING
+   ========================================================= */
+
+@keyframes topWaveMorph {
+    0% {
+        border-radius:
+            48% 52% 65% 35%
+            /
+            45% 38% 62% 55%;
+    }
+
+    50% {
+        border-radius:
+            62% 38% 48% 52%
+            /
+            55% 48% 52% 45%;
+    }
+
+    100% {
+        border-radius:
+            38% 62% 55% 45%
+            /
+            42% 58% 42% 58%;
+    }
+}
+
+@keyframes bottomWaveMorph {
+    0% {
+        border-radius:
+            55% 45% 35% 65%
+            /
+            40% 55% 45% 60%;
+    }
+
+    50% {
+        border-radius:
+            40% 60% 55% 45%
+            /
+            60% 40% 55% 45%;
+    }
+
+    100% {
+        border-radius:
+            65% 35% 45% 55%
+            /
+            45% 65% 35% 55%;
+    }
+}
+
+
+/* =========================================================
+   CAMPUS HEADING
+   ========================================================= */
+
+.campus-heading {
+    font-family: "Cabin Sketch", cursive;
+    font-weight: 700;
+
+    color: #000000;
+
+    letter-spacing: 1.5px;
+    line-height: 1.25;
+}
+
+[data-theme="dark"] .campus-heading {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .event-info a {
+    color: var(--text-color) !important;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.custom-footer {
+    background-color: var(--card-color);
+    color: var(--text-color);
+}
+
+.footer-muted {
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+.footer-link {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    color: var(--primary-color);
+}
+
+
+/* =========================================================
+   EVENT CARD
+   ========================================================= */
+
+.event-card-image {
+    width: 100%;
+    height: 180px;
+
+    object-fit: cover !important;
+
+    display: block;
+}
+
+.event-card-title {
+    color: var(--text-color);
+
+    font-weight: 700;
+
+    margin-bottom: 8px;
+}
+
+.event-card-description {
+    color: var(--text-color);
+
+    opacity: 0.75;
+
+    line-height: 1.6;
+}
+
+.event-category {
+    display: inline-block;
+    width: fit-content;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    background-color: var(--primary-color);
+    color: white;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.event-info {
+    font-size: 0.9rem;
+}
+
+.event-info p {
+    color: var(--text-color);
+}
+
+.event-meta {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+
+/* Registration badge */
+
+.event-registration {
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    background-color: var(--secondary-color);
+    color: white;
+
+    font-size: 0.8rem;
+}
+
+
+/* Free event badge */
+
+.event-free {
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    background-color: var(--primary-color);
+    color: white;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+
+/* Paid event badge */
+
+.event-fee {
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    background-color: var(--secondary-color);
+    color: white;
+
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+
+/* Event image placeholder */
+
+.event-image-placeholder {
+    background-color: var(--bg-color);
+
+    color: var(--text-color);
+
+    opacity: 0.7;
+}
+
+
+/* =========================================================
+   FILTER CARD
+   ========================================================= */
+
+.filter-card {
+    background-color: var(--card-color);
+
+    border: none;
+
+    border-radius: 16px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.filter-card .form-label {
+    color: var(--text-color);
+}
+
+.filter-card .form-control,
+.filter-card .form-select {
+    background-color: var(--bg-color);
+
+    color: var(--text-color);
+
+    border: 1px solid var(--secondary-color);
+
+    border-radius: 10px;
+}
+
+.filter-card .form-control::placeholder {
+    color: var(--text-color);
+    opacity: 0.55;
+}
+
+.filter-card .form-control:focus,
+.filter-card .form-select:focus {
+    background-color: var(--bg-color);
+
+    color: var(--text-color);
+
+    border-color: var(--primary-color);
+
+    box-shadow: 0 0 0 0.2rem rgba(101, 146, 135, 0.2);
+}
+
+.filter-card .btn {
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   CATEGORY CARD
+   ========================================================= */
+
+.category-card {
+    background-color: var(--card-color);
+
+    border-radius: 16px;
+
+    padding: 10px;
+
+    text-align: center;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.category-card-title {
+    color: var(--text-color);
+
+    font-weight: 600;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   EVENT DETAILS PAGE
+   ========================================================= */
+
+.event-detail-card {
+    background-color: var(--card-color);
+
+    color: var(--text-color);
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.event-detail-image {
+    width: 100%;
+    height: 380px;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+.event-detail-body {
+    padding: 40px;
+}
+
+.event-detail-title {
+    color: var(--text-color);
+
+    font-weight: 700;
+
+    margin-bottom: 15px;
+}
+
+.event-detail-description {
+    color: var(--text-color);
+
+    opacity: 0.8;
+
+    font-size: 1.05rem;
+
+    line-height: 1.8;
+
+    max-width: 900px;
+}
+
+.event-details-grid {
+    margin-top: 10px;
+}
+
+.event-detail-info {
+    padding: 18px;
+
+    background-color: var(--bg-color);
+
+    border-radius: 12px;
+
+    height: 100%;
+}
+
+.event-detail-label {
+    display: block;
+
+    color: var(--primary-color);
+
+    font-size: 0.85rem;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+    margin-bottom: 6px;
+}
+
+.event-detail-info p {
+    margin: 0;
+
+    color: var(--text-color);
+
+    font-weight: 500;
+}
+
+
+/* Event status */
+
+.event-status {
+    display: inline-block;
+
+    margin-top: 8px;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: 0.8rem;
+
+    font-weight: 600;
+}
+
+.event-status.available {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.event-status.full {
+    background-color: #dc3545;
+    color: white;
+}
+
+
+/* Free event fee */
+
+.event-fee-free {
+    color: var(--primary-color) !important;
+
+    font-weight: 700 !important;
+}
+
+
+/* Event action buttons */
+
+.event-actions {
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   STUDENT DASHBOARD
+   ========================================================= */
+
+.dashboard-stat-card {
+    background-color: var(--card-color);
+
+    color: var(--text-color);
+
+    padding: 25px;
+
+    border-radius: 16px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    height: 100%;
+}
+
+.dashboard-stat-card h2 {
+    color: var(--primary-color);
+
+    font-size: 2rem;
+
+    font-weight: 700;
+
+    margin: 8px 0 0;
+}
+
+.dashboard-stat-label {
+    color: var(--text-color);
+
+    opacity: 0.7;
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+}
+
+
+/* Empty dashboard */
+
+.dashboard-empty {
+    background-color: var(--card-color);
+
+    color: var(--text-color);
+
+    padding: 50px 30px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-empty h2,
+.dashboard-empty h3 {
+    color: var(--text-color);
+
+    font-weight: 700;
+
+    margin-bottom: 10px;
+}
+
+.dashboard-empty p {
+    color: var(--text-color);
+
+    opacity: 0.7;
+
+    margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   CLUB DASHBOARD
+   ========================================================= */
+
+.club-dashboard-card {
+    background-color: transparent;
+
+    color: var(--text-color);
+
+    margin-bottom: 50px;
+}
+
+
+/* Club header */
+
+.club-dashboard-header {
+    background-color: var(--card-color);
+
+    padding: 25px 30px;
+
+    border-radius: 18px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Club logo */
+
+.club-dashboard-logo {
+    width: 75px;
+    height: 75px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+.club-logo-placeholder {
+    background-color: var(--bg-color);
+
+    color: var(--text-color);
+
+    opacity: 0.6;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 0.8rem;
+}
+
+
+/* Club role */
+
+.club-role-badge {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    background-color: var(--primary-color);
+
+    color: white;
+
+    font-size: 0.75rem;
+
+    font-weight: 600;
+
+    margin-bottom: 6px;
+}
+
+
+/* Club name */
+
+.club-dashboard-name {
+    color: var(--text-color);
+
+    font-size: 1.5rem;
+
+    font-weight: 700;
+
+    margin-bottom: 5px;
+}
+
+.club-dashboard-description {
+    color: var(--text-color);
+
+    opacity: 0.7;
+
+    margin-bottom: 0;
+}
+
+
+/* Events heading */
+
+.club-dashboard-card hr {
+    border-color: var(--text-color);
+
+    opacity: 0.15;
+
+    margin: 35px 0;
+}
+
+
+/* Club event cards */
+
+.club-dashboard-card .event-card {
+    background-color: var(--card-color);
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--secondary-color);
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.club-dashboard-card .event-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+
+/* Registration progress */
+
+.registration-progress {
+    margin-top: auto;
+}
+
+.registration-progress small {
+    color: var(--text-color);
+
+    opacity: 0.7;
+}
+
+.registration-progress .progress {
+    height: 8px;
+
+    background-color: var(--bg-color);
+
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+.registration-progress .progress-bar {
+    background-color: var(--primary-color);
+}
+
+
+/* =========================================================
+   REGISTRATION PAGE
+   ========================================================= */
+
+.registration-card {
+    background-color: var(--card-color);
+
+    color: var(--text-color);
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Registration header */
+
+.registration-header {
+    padding: 30px 35px;
+
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.registration-header h1 {
+    color: var(--text-color);
+
+    font-size: 1.8rem;
+
+    font-weight: 700;
+
+    margin: 15px 0 8px;
+}
+
+.registration-header p {
+    color: var(--text-color);
+
+    opacity: 0.7;
+
+    margin-bottom: 0;
+}
+
+
+/* Registration body */
+
+.registration-body {
+    padding: 30px 35px;
+}
+
+
+/* Registration fields */
+
+.registration-field {
+    margin-bottom: 20px;
+}
+
+.registration-field label {
+    display: block;
+
+    color: var(--text-color);
+
+    font-weight: 600;
+
+    margin-bottom: 7px;
+}
+
+.registration-field input,
+.registration-field select {
+    width: 100%;
+
+    padding: 10px 12px;
+
+    background-color: var(--bg-color);
+
+    color: var(--text-color);
+
+    border: 1px solid var(--secondary-color);
+
+    border-radius: 10px;
+}
+
+.registration-field input:focus,
+.registration-field select:focus {
+    background-color: var(--bg-color);
+
+    color: var(--text-color);
+
+    border-color: var(--primary-color);
+
+    outline: none;
+
+    box-shadow: 0 0 0 0.2rem rgba(101, 146, 135, 0.2);
+}
+
+
+/* =========================================================
+   REGISTRATION SUCCESS / MESSAGE PAGE
+   ========================================================= */
+
+.registration-message-card {
+    background-color: var(--card-color);
+
+    color: var(--text-color);
+
+    padding: 45px 35px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.registration-message-icon {
+    width: 60px;
+    height: 60px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background-color: var(--primary-color);
+
+    color: white;
+
+    font-size: 1.6rem;
+
+    font-weight: 700;
+}
+
+.registration-message-card h1 {
+    color: var(--text-color);
+
+    font-size: 1.7rem;
+
+    font-weight: 700;
+
+    margin-bottom: 12px;
+}
+
+.registration-message-card p {
+    color: var(--text-color);
+
+    opacity: 0.75;
+
+    line-height: 1.6;
+
+    margin-bottom: 25px;
+}
+
+.registration-message-actions {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   MY REGISTRATIONS
+   ========================================================= */
+
+.event-registered-badge {
+    display: inline-block;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background-color: var(--primary-color);
+
+    color: white;
+
+    font-size: 0.8rem;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   SUCCESS PAGE
+   ========================================================= */
+
+.success-page {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+
+    background: transparent !important;
+    color: var(--text-color);
+
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =========================================================
+   SUCCESS CARD
+   ========================================================= */
+
+.success-card {
+    width: 100%;
+    max-width: 470px;
+
+    background-color: var(--card-color);
+    color: var(--text-color);
+
+    border-radius: 28px;
+
+    padding: 50px 38px 40px;
+
+    text-align: center;
+
+    box-sizing: border-box;
+
+    position: relative;
+    z-index: 10;
+
+    border: 1px solid var(--secondary-color);
+
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.10);
+
+    opacity: 0;
+
+    transform: translateY(35px) scale(0.96);
+
+    animation: successCardEnter 0.6s ease-out forwards;
+}
+
+
+@keyframes successCardEnter {
+
+    0% {
+        opacity: 0;
+        transform: translateY(35px) scale(0.96);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* =========================================================
+   SUCCESS ICON
+   ========================================================= */
+
+.success-icon-wrapper {
+    width: 120px;
+    height: 120px;
+
+    margin: 0 auto 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+
+.success-icon {
+    width: 82px;
+    height: 82px;
+
+    border-radius: 50%;
+
+    background-color: var(--primary-color);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 8px 25px rgba(3, 167, 145, 0.25);
+
+    transform: scale(0);
+
+    animation: iconPop 0.5s ease-out 0.45s forwards;
+}
+
+
+[data-theme="dark"] .success-icon {
+    box-shadow: 0 8px 25px rgba(247, 55, 79, 0.30);
+}
+
+
+@keyframes iconPop {
+
+    0% {
+        transform: scale(0);
+    }
+
+    70% {
+        transform: scale(1.12);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+
+/* =========================================================
+   EXPANDING RINGS
+   ========================================================= */
+
+.success-ring {
+    position: absolute;
+
+    width: 82px;
+    height: 82px;
+
+    border-radius: 50%;
+
+    border: 2px solid var(--primary-color);
+
+    opacity: 0;
+
+    z-index: 1;
+}
+
+
+.success-ring-1 {
+    animation: ringExpand 1.2s ease-out 0.55s forwards;
+}
+
+
+.success-ring-2 {
+    animation: ringExpand 1.2s ease-out 0.8s forwards;
+}
+
+
+@keyframes ringExpand {
+
+    0% {
+        opacity: 0.7;
+        transform: scale(0.8);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.8);
+    }
+
+}
+
+
+/* =========================================================
+   CHECKMARK
+   ========================================================= */
+
+.success-check {
+    width: 52px;
+    height: 52px;
+
+    fill: none;
+
+    stroke: white;
+
+    stroke-width: 5;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+.success-check path {
+    stroke-dasharray: 60;
+
+    stroke-dashoffset: 60;
+
+    animation: drawCheck 0.5s ease 0.85s forwards;
+}
+
+
+@keyframes drawCheck {
+
+    to {
+        stroke-dashoffset: 0;
+    }
+
+}
+
+
+/* =========================================================
+   SUCCESS TITLE
+   ========================================================= */
+
+.success-title {
+    font-size: 29px;
+
+    font-weight: 700;
+
+    margin-bottom: 10px;
+
+    color: var(--text-color);
+}
+
+
+/* =========================================================
+   SUCCESS MESSAGE
+   ========================================================= */
+
+.success-message {
+    color: var(--text-color);
+
+    opacity: 0.75;
+
+    line-height: 1.6;
+
+    margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   EVENT DETAILS
+   ========================================================= */
+
+.success-event-details {
+    background-color: var(--bg-color);
+
+    border: 1px solid var(--secondary-color);
+
+    border-radius: 17px;
+
+    padding: 20px;
+
+    margin-bottom: 28px;
+
+    text-align: left;
+}
+
+
+.success-event-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 8px;
+}
+
+
+.success-event-label {
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.2px;
+
+    color: var(--primary-color);
+}
+
+
+.success-event-check {
+    width: 24px;
+    height: 24px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--secondary-color);
+
+    color: var(--text-color);
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+.success-event-details h4 {
+    margin-bottom: 17px;
+
+    font-size: 19px;
+
+    font-weight: 700;
+
+    color: var(--text-color);
+}
+
+
+/* =========================================================
+   EVENT DETAIL ROW
+   ========================================================= */
+
+.success-detail-row {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 8px 0;
+
+    border-top: 1px solid var(--secondary-color);
+
+    font-size: 14px;
+
+    color: var(--text-color);
+}
+
+
+.detail-label {
+    color: var(--text-color);
+
+    opacity: 0.6;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   SUCCESS BUTTON
+   ========================================================= */
+
+.success-button {
+    display: inline-block;
+
+    min-width: 190px;
+
+    padding: 11px 25px;
+
+    border-radius: 11px;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   CONFETTI
+   ========================================================= */
+
+.confetti {
+    position: absolute;
+
+    width: 7px;
+    height: 13px;
+
+    border-radius: 2px;
+
+    opacity: 0;
+
+    z-index: 5;
+}
+
+
+.confetti-1 {
+    left: 18%;
+    top: 27%;
+
+    background: var(--primary-color);
+
+    animation: confettiOne 1.4s ease-out 0.65s forwards;
+}
+
+
+.confetti-2 {
+    left: 28%;
+    top: 19%;
+
+    background: var(--secondary-color);
+
+    animation: confettiTwo 1.5s ease-out 0.7s forwards;
+}
+
+
+.confetti-3 {
+    right: 22%;
+    top: 23%;
+
+    background: var(--primary-color);
+
+    animation: confettiThree 1.4s ease-out 0.7s forwards;
+}
+
+
+.confetti-4 {
+    right: 17%;
+    top: 34%;
+
+    background: var(--secondary-color);
+
+    animation: confettiFour 1.5s ease-out 0.65s forwards;
+}
+
+
+.confetti-5 {
+    left: 23%;
+    top: 38%;
+
+    background: var(--primary-color);
+
+    animation: confettiFive 1.4s ease-out 0.75s forwards;
+}
+
+
+.confetti-6 {
+    right: 27%;
+    top: 40%;
+
+    background: var(--secondary-color);
+
+    animation: confettiSix 1.5s ease-out 0.75s forwards;
+}
+
+
+.confetti-7 {
+    left: 35%;
+    top: 17%;
+
+    background: var(--primary-color);
+
+    animation: confettiSeven 1.4s ease-out 0.8s forwards;
+}
+
+
+.confetti-8 {
+    right: 35%;
+    top: 17%;
+
+    background: var(--secondary-color);
+
+    animation: confettiEight 1.4s ease-out 0.8s forwards;
+}
+
+
+/* =========================================================
+   CONFETTI ANIMATIONS
+   ========================================================= */
+
+@keyframes confettiOne {
+
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) rotate(25deg);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-55px, -75px) rotate(180deg);
+    }
+}
+
+
+@keyframes confettiTwo {
+
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) rotate(-20deg);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-25px, -95px) rotate(-180deg);
+    }
+}
+
+
+@keyframes confettiThree {
+
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) rotate(35deg);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(60px, -85px) rotate(200deg);
+    }
+}
+
+
+@keyframes confettiFour {
+
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) rotate(-30deg);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(75px, -35px) rotate(-200deg);
+    }
+}
+
+
+@keyframes confettiFive {
+
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) rotate(50deg);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-75px, 35px) rotate(220deg);
+    }
+}
+
+
+@keyframes confettiSix {
+
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) rotate(-45deg);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(70px, 40px) rotate(-220deg);
+    }
+}
+
+
+@keyframes confettiSeven {
+
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) rotate(15deg);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-35px, -105px) rotate(180deg);
+    }
+}
+
+
+@keyframes confettiEight {
+
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) rotate(-15deg);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(40px, -100px) rotate(-180deg);
+    }
+}
+
+
+/* =========================================================
+   SUCCESS PAGE — MOBILE
+   ========================================================= */
+
+@media (max-width: 576px) {
+
+    .success-page {
+        min-height: calc(100vh - 70px);
+
+        padding: 40px 15px;
+    }
+
+    .success-card {
+        padding: 40px 22px 30px;
+
+        border-radius: 22px;
+    }
+
+    .success-title {
+        font-size: 25px;
+    }
+
+    .success-detail-row {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 2px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET / MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    /* Event details */
+
+    .event-detail-image {
+        height: 250px;
+    }
+
+    .event-detail-body {
+        padding: 25px;
+    }
+
+    .event-detail-title {
+        font-size: 1.8rem;
+    }
+
+    .event-actions {
+        flex-direction: column;
+    }
+
+    .event-actions .btn {
+        width: 100%;
+    }
+
+
+    /* Top waves */
+
+    .wave-top-1 {
+        width: 500px;
+        height: 280px;
+
+        left: -180px;
+    }
+
+    .wave-top-2 {
+        width: 450px;
+        height: 260px;
+
+        right: -180px;
+    }
+
+    .wave-top-3 {
+        width: 380px;
+        height: 220px;
+
+        left: 10%;
+    }
+
+
+    /* Bottom waves */
+
+    .wave-bottom-1 {
+        width: 520px;
+        height: 280px;
+
+        left: -180px;
+    }
+
+    .wave-bottom-2 {
+        width: 480px;
+        height: 260px;
+
+        right: -180px;
+    }
+
+    .wave-bottom-3 {
+        width: 350px;
+        height: 210px;
+
+        left: 10%;
+    }
+
+
+    /* Club dashboard */
+
+    .club-dashboard-header {
+        padding: 20px;
+
+        align-items: flex-start;
+    }
+
+    .club-dashboard-header .btn {
+        width: 100%;
+    }
+
+
+    /* Registration */
+
+    .registration-header {
+        padding: 25px 20px;
+    }
+
+    .registration-body {
+        padding: 25px 20px;
+    }
+
+    .registration-message-card {
+        padding: 35px 20px;
+    }
+
+    .registration-message-actions {
+        flex-direction: column;
+    }
+
+    .registration-message-actions .btn {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 576px) {
+
+    .success-page {
+        min-height: calc(100vh - 70px);
+
+        padding: 40px 15px;
+    }
+
+    .success-card {
+        padding: 40px 22px 30px;
+
+        border-radius: 22px;
+    }
+
+    .success-title {
+        font-size: 25px;
+    }
+
+    .success-detail-row {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 2px;
+    }
+}
+
+
+/* =========================================================
+   SUCCESS PAGE ISOLATION
+   ========================================================= */
+
+/* Prevent global animated background from interfering */
+.success-page {
+    position: relative;
+    z-index: 5;
+
+    isolation: isolate;
+}
+
+
+/* Success page should use its own background */
+.success-page {
+    background-color: #f4f8f5;
+}
+
+
+/* Keep success card above everything */
+.success-page .success-card {
+    position: relative;
+    z-index: 10;
+}
+
+
+/* Prevent generic .card styles from affecting success card */
+.success-page .card {
+    background: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+
+/* Success page typography should remain independent */
+.success-page h1,
+.success-page h2,
+.success-page h3,
+.success-page h4,
+.success-page h5,
+.success-page h6,
+.success-page p {
+    font-family: inherit;
+}
+
+
+/* Success page button */
+.success-page .success-button {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+
+/* Prevent normal button hover from breaking success button */
+.success-page .success-button:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: white;
+}
+
+
+
+
+
+
+/* =========================
+   Bootstrap Dark Theme Fix
+   ========================= */
+
+[data-theme="dark"] {
+    --bs-body-color: var(--text-color);
+    --bs-body-color-rgb: 245, 245, 245;
+
+    --bs-secondary-color: rgba(245, 245, 245, 0.75);
+    --bs-secondary-color-rgb: 245, 245, 245;
+
+    --bs-tertiary-color: rgba(245, 245, 245, 0.5);
+    --bs-tertiary-color-rgb: 245, 245, 245;
+
+    --bs-emphasis-color: var(--text-color);
+    --bs-emphasis-color-rgb: 245, 245, 245;
+
+    --bs-heading-color: var(--text-color);
+
+    --bs-link-color: var(--primary-color);
+    --bs-link-hover-color: var(--secondary-color);
+}
+
+
+/* =========================
+   Navbar Dropdown - Always Light
+   ========================= */
+
+.custom-navbar .dropdown-menu {
+    background-color: #ffffff !important;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.custom-navbar .dropdown-item {
+    color: #212529 !important;
+    background-color: transparent;
+}
+
+.custom-navbar .dropdown-item:hover,
+.custom-navbar .dropdown-item:focus {
+    background-color: #f1f3f5 !important;
+    color: #212529 !important;
+}
+
+.custom-navbar .dropdown-divider {
+    border-top-color: #dee2e6 !important;
+}
+
+
+.hero-image-container {
+    height: 300px;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}

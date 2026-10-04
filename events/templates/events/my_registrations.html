@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Registrations | CollegeEvents
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+
+<div class="container">
+
+    <!-- Header -->
+
+    <div class="mb-5">
+
+        <h1 class="display-6 fw-bold">
+            My Registrations
+        </h1>
+
+        <p class="text-muted">
+            Events you have registered for.
+        </p>
+
+    </div>
+
+
+    {% if registrations %}
+
+        <div class="row g-4">
+
+            {% for registration in registrations %}
+
+                <div class="col-12 col-sm-6 col-lg-4">
+
+                    <div class="card event-card h-100">
+
+                        <!-- Event Image -->
+
+                        {% if registration.event.image %}
+
+                            <img
+                                src="{{ registration.event.image.url }}"
+                                class="event-card-image"
+                                alt="{{ registration.event.name }}"
+                            >
+
+                        {% else %}
+
+                            <div class="event-card-image event-image-placeholder
+                                        d-flex align-items-center justify-content-center">
+
+                                <span>
+                                    Event Image
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- Event Details -->
+
+                        <div class="card-body d-flex flex-column">
+
+                            <span class="event-category mb-2">
+                                {{ registration.event.category.name }}
+                            </span>
+
+
+                            <h5 class="event-card-title">
+                                {{ registration.event.name }}
+                            </h5>
+
+
+                            <p class="event-card-description">
+                                Organized by
+                                <strong>
+                                    {{ registration.event.club.name }}
+                                </strong>
+                            </p>
+
+
+                            <div class="event-info mb-3">
+
+                                <p class="mb-1">
+                                    <strong>Date:</strong>
+                                    {{ registration.event.date }}
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Time:</strong>
+                                    {{ registration.event.start_time }}
+                                    -
+                                    {{ registration.event.end_time }}
+                                </p>
+
+                                <p class="mb-0">
+                                    <strong>Venue:</strong>
+                                    {{ registration.event.venue.name }}
+                                </p>
+
+                            </div>
+
+
+                            <!-- Registered Badge -->
+
+                            <div class="mb-3">
+
+                                <span class="event-registered-badge">
+                                    ✓ Registered
+                                </span>
+
+                            </div>
+
+
+                            <!-- Button -->
+
+                            <div class="mt-auto">
+
+                                <a href="{% url 'event_detail' registration.event.id %}"
+                                   class="btn btn-outline-primary w-100">
+
+                                    View Event
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+    {% else %}
+
+        <!-- Empty State -->
+
+        <div class="dashboard-empty">
+
+            <h2 class="h4 fw-bold">
+                No registrations yet
+            </h2>
+
+            <p>
+                You haven't registered for any events yet.
+                Browse upcoming events to find something interesting.
+            </p>
+
+            <a href="{% url 'event_list' %}"
+               class="btn btn-primary">
+
+                Browse Events
+
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</section>
+
+{% endblock %}

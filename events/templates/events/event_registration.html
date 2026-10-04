@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Register | {{ event.name }}
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-8 col-lg-6">
+
+                <div class="registration-card">
+
+                    <!-- Header -->
+                    <div class="registration-header">
+
+                        <span class="event-category">
+                            {{ event.category.name }}
+                        </span>
+
+                        <h1>
+                            Register for {{ event.name }}
+                        </h1>
+
+                        <p>
+                            Enter your details to register for this event.
+                        </p>
+
+                    </div>
+
+
+                    <!-- Form -->
+                    <div class="registration-body">
+
+                        <form method="post">
+
+                            {% csrf_token %}
+
+                            <div class="registration-field">
+
+                                <label for="{{ form.name.id_for_label }}">
+                                    Name
+                                </label>
+
+                                {{ form.name }}
+
+                                {% for error in form.name.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+
+
+                            <div class="registration-field">
+
+                                <label for="{{ form.usn.id_for_label }}">
+                                    USN
+                                </label>
+
+                                {{ form.usn }}
+
+                                {% for error in form.usn.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+
+
+                            <div class="registration-field">
+
+                                <label for="{{ form.branch.id_for_label }}">
+                                    Branch
+                                </label>
+
+                                {{ form.branch }}
+
+                                {% for error in form.branch.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+
+
+                            <div class="registration-field">
+
+                                <label for="{{ form.semester.id_for_label }}">
+                                    Semester
+                                </label>
+
+                                {{ form.semester }}
+
+                                {% for error in form.semester.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+
+
+                            <button type="submit"
+                                    class="btn btn-primary w-100 mt-2">
+                                Confirm Registration
+                            </button>
+
+                        </form>
+
+
+                        <a href="{% url 'event_detail' event.id %}"
+                           class="btn btn-outline-primary w-100 mt-3">
+                            Back to Event
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

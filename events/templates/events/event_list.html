@@ -1,0 +1,304 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Events | CollegeEvents
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <!-- Page Heading -->
+        <h1 class="mb-4">
+            Upcoming Events
+        </h1>
+
+
+        <!-- Search & Filter -->
+        <div class="card filter-card mb-5">
+
+            <div class="card-body p-4">
+
+                <form method="get">
+
+                    <div class="row g-3 align-items-end">
+
+                        <!-- Search -->
+                        <div class="col-md-6">
+
+                            <label class="form-label fw-semibold">
+                                Search Events
+                            </label>
+
+                            <input type="text"
+                                   name="search"
+                                   class="form-control"
+                                   placeholder="Search by event name..."
+                                   value="{{ search|default:'' }}">
+
+                        </div>
+
+
+                        <!-- Category -->
+                        <div class="col-md-4">
+
+                            <label class="form-label fw-semibold">
+                                Category
+                            </label>
+
+                            <select name="category"
+                                    class="form-select">
+
+                                <option value="">
+                                    All Categories
+                                </option>
+
+                                {% for category in categories %}
+
+                                    <option value="{{ category.id }}"
+                                        {% if selected_category == category.id|stringformat:"s" %}
+                                            selected
+                                        {% endif %}>
+
+                                        {{ category.name }}
+
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Search Button -->
+                        <div class="col-md-2">
+
+                            <button type="submit"
+                                    class="btn btn-primary w-100">
+
+                                Search
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Clear Filters -->
+                    {% if search or selected_category %}
+
+                        <div class="mt-3">
+
+                            <a href="{% url 'event_list' %}"
+                               class="btn btn-sm btn-outline-secondary">
+
+                                Clear Filters
+
+                            </a>
+
+                        </div>
+
+                    {% endif %}
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- Event Cards -->
+        <div class="row g-4">
+
+            {% for event in events %}
+
+                <div class="col-12 col-sm-6 col-lg-4">
+
+                    <div class="card event-card h-100">
+
+
+                        <!-- Event Image -->
+                        {% if event.image %}
+
+                            <img src="{{ event.image.url }}"
+                                 class="event-card-image"
+                                 alt="{{ event.name }}">
+
+                        {% else %}
+
+                            <div class="event-card-image d-flex align-items-center justify-content-center">
+
+                                <span class="event-image-placeholder">
+                                    Event Image
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- Event Content -->
+                        <div class="card-body d-flex flex-column">
+
+
+                            <!-- Category -->
+                            <span class="event-category mb-2">
+
+                                {{ event.category.name }}
+
+                            </span>
+
+
+                            <!-- Event Name -->
+                            <h5 class="event-card-title">
+
+                                {{ event.name }}
+
+                            </h5>
+
+
+                            <!-- Description -->
+                            <p class="event-card-description">
+
+                                {{ event.description|truncatewords:20 }}
+
+                            </p>
+
+
+                            <!-- Event Information -->
+                            <div class="event-info mb-3">
+
+                                <p class="mb-1">
+
+                                    <strong>Club:</strong>
+                                    {{ event.club.name }}
+
+                                </p>
+
+
+                                <p class="mb-1">
+
+                                    <strong>Date:</strong>
+                                    {{ event.date }}
+
+                                </p>
+
+
+                                <p class="mb-1">
+
+                                    <strong>Venue:</strong>
+                                    {{ event.venue.name }}
+
+                                </p>
+
+                            </div>
+
+
+                            <!-- Registration & Fee -->
+                            <div class="event-meta mb-3">
+
+
+                                <!-- Registration Count -->
+                                {% if event.registration_count > 0 %}
+
+                                    <span class="event-registration">
+
+                                        {{ event.registration_count }} registered
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="event-registration">
+
+                                        No registrations yet
+
+                                    </span>
+
+                                {% endif %}
+
+
+                                <!-- Registration Fee -->
+                                {% if event.registration_fee == 0 %}
+
+                                    <span class="event-free">
+
+                                        Free
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="event-fee">
+
+                                        ₹{{ event.registration_fee }}
+
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- View Details -->
+                            <a href="{% url 'event_detail' event.id %}"
+                               class="btn btn-primary mt-auto">
+
+                                View Details
+
+                            </a>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            {% empty %}
+
+                <!-- No Events -->
+                <div class="col-12">
+
+                    <div class="text-center py-5">
+
+                        <h2 class="h4 fw-bold">
+
+                            No events found
+
+                        </h2>
+
+
+                        <p class="text-muted mb-4">
+
+                            We couldn't find any events matching your
+                            search or filter.
+
+                        </p>
+
+
+                        <a href="{% url 'event_list' %}"
+                           class="btn btn-outline-primary">
+
+                            Clear Filters
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

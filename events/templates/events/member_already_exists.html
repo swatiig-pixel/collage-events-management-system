@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Already a Member | {{ club.name }}
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-7 col-lg-6">
+
+                <div class="card">
+
+                    <div class="card-body p-4 text-center">
+
+                        <h1 class="h4 fw-bold mb-3">
+                            Already a Member
+                        </h1>
+
+                        <p class="text-muted mb-4">
+                            {{ student.name }} is already a member of
+                            <strong>{{ club.name }}</strong>.
+                        </p>
+
+
+                        <div class="p-3 rounded border mb-4">
+
+                            <div class="fw-semibold">
+                                {{ student.name }}
+                            </div>
+
+                            <div class="text-muted small">
+                                USN: {{ student.usn }}
+                            </div>
+
+                            <div class="mt-2">
+
+                                {% if member.is_president %}
+
+                                    <span class="badge text-bg-primary">
+                                        President
+                                    </span>
+
+                                {% elif member.membership_type == "CORE" %}
+
+                                    <span class="badge text-bg-success">
+                                        Core Member
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge text-bg-secondary">
+                                        Member
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                            {% if member.position %}
+
+                                <div class="text-muted small mt-2">
+                                    Position: {{ member.position }}
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <a
+                            href="{% url 'manage_members' club.id %}"
+                            class="btn btn-primary">
+
+                            Back to Members
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

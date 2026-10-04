@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Home | CollegeEvents
+{% endblock %}
+
+
+{% block content %}
+<!--Hero-->
+   <div class="container col-xxl-8 px-4 py-5">
+
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+
+            <div class="col-10 col-sm-8 col-lg-6">
+                <div class="hero-image-container">
+                    <img src="{% static 'images/campus-events.jpeg' %}"
+                        class="hero-image"
+                        alt="College Events">
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+
+                <h1 class="display-5 fw-bold lh-1 mb-3 campus-heading">
+                    Discover What's Happening on Campus
+                </h1>
+
+                <p class="lead">
+                    Find technical events, cultural programs,
+                    workshops, competitions and more happening
+                    around your college.
+                </p>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+
+                    <a href="{% url 'event_list' %}"
+                    class="btn btn-primary btn-lg px-4 me-md-2">
+                        Explore Events
+                    </a>
+
+                    <a href="{% url 'student_dashboard' %}"
+                    class="btn btn-outline-secondary btn-lg px-4">
+                        My Dashboard
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Categories -->
+
+    <section class="py-4">
+
+        <div class="container">
+
+            <h2 class="mb-4">
+                Explore Categories
+            </h2>
+
+            <div class="row g-3">
+
+                {% for category in categories %}
+
+                    <div class="col-12 col-sm-6 col-lg-4">
+
+                        <a href="{% url 'event_list' %}?category={{ category.id }}"
+                        class="text-decoration-none">
+
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+
+                                    <h5 class="card-title">
+                                        {{ category.name }}
+                                    </h5>
+
+                                </div>
+                            </div>
+
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+<!--upcoming events-->
+    <section class="py-5">
+
+        <div class="container">
+
+            <h2 class="mb-4">
+                Upcoming Events
+            </h2>
+
+            <div class="row g-4">
+
+                {% for event in events %}
+
+                    <div class="col-12 col-sm-6 col-lg-4">
+
+                        <div class="card h-100">
+
+                            <div style="height: 180px;">
+
+                                {% if event.image %}
+
+                                    <img src="{{ event.image.url }}"
+                                        class="event-card-image"
+                                        alt="{{ event.name }}">
+
+                                {% else %}
+
+                                    <div class="bg-light h-100 d-flex align-items-center justify-content-center">
+
+                                        <span class="text-muted">
+                                            Event Image
+                                        </span>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <span class="badge text-bg-primary mb-2">
+                                    {{ event.category.name }}
+                                </span>
+
+                                <h5 class="event-card-title">
+                                    {{ event.name }}
+                                </h5>
+
+                                <p class="event-card-description">
+                                    {{ event.description|truncatewords:15 }}
+                                </p>
+
+                                <div class="mb-3">
+
+                                    <p class="mb-1">
+                                        <strong>Club:</strong>
+                                        {{ event.club.name }}
+                                    </p>
+
+                                    <p class="mb-1">
+                                        <strong>Date:</strong>
+                                        {{ event.date }}
+                                    </p>
+
+                                    <p class="mb-1">
+                                        <strong>Venue:</strong>
+                                        {{ event.venue.name }}
+                                    </p>
+
+                                    {% if event.registration_fee == 0 %}
+
+                                        <span class="badge text-bg-success">
+                                            Free
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="badge text-bg-warning">
+                                            ₹{{ event.registration_fee }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                                <a href="{% url 'event_detail' event.id %}"
+                                class="btn btn-primary">
+                                    View Details
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% empty %}
+
+                    <p>No upcoming events available.</p>
+
+                {% endfor %}
+
+                    <div class="text-center mt-4">
+
+                        <a href="{% url 'event_list' %}"
+                        class="btn btn-outline-primary">
+                            View All Events
+                        </a>
+
+                    </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!--Featured clubs-->
+
+
+    <section class="py-5">
+
+        <div class="container">
+
+            <h2 class="mb-4">
+                Featured Clubs
+            </h2>
+
+        <div class="d-flex flex-row flex-nowrap overflow-auto gap-3 pb-3">
+
+    {% for club in clubs %}
+
+            <div class="card flex-shrink-0" style="width: 420px;">
+
+                <div class="row g-0">
+
+                    <div class="col-md-4">
+
+                        {% if club.logo %}
+                            <img src="{{ club.logo.url }}"
+                                class="w-100 h-100 object-fit-cover club-logo"
+                                alt="{{ club.name }} logo">
+                        {% else %}
+
+                            <div class="h-100 d-flex align-items-center justify-content-center bg-light">
+
+                                <span class="text-muted">
+                                    Club Logo
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="col-md-8">
+
+                        <div class="card-body">
+
+                            <span class="badge text-bg-success mb-2">
+                                Approved Club
+                            </span>
+
+                            <h5 class="card-title">
+                                {{ club.name }}
+                            </h5>
+
+                            <p class="card-text">
+                                {{ club.description }}
+                            </p>
+
+                            <a href="{% url 'club_detail' club.id %}"
+                                class="btn btn-primary">
+                                View Club
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <p>No clubs available.</p>
+
+        {% endfor %}
+
+    </div>  
+
+            
+
+        </div>
+
+    </section>
+
+{% endblock %}

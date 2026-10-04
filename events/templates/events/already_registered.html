@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Already Registered | CollegeEvents
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-7 col-lg-6">
+
+                <div class="registration-message-card">
+
+                    <div class="registration-message-icon">
+                        ✓
+                    </div>
+
+                    <h1>
+                        Already Registered
+                    </h1>
+
+                    <p>
+                        You have already registered for
+                        <strong>{{ event.name }}</strong>.
+                    </p>
+
+                    <div class="registration-message-actions">
+
+                        <a href="{% url 'event_detail' event.id %}"
+                           class="btn btn-primary">
+                            View Event
+                        </a>
+
+                        <a href="{% url 'event_list' %}"
+                           class="btn btn-outline-primary">
+                            Browse Events
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

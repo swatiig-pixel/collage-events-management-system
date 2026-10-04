@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card p-4 text-center">
+
+        <h2 class="mb-3">
+            Registration Closed
+        </h2>
+
+        {% if event.status == "Ongoing" %}
+
+            <p class="text-muted">
+                This event is currently ongoing.
+                Registration is no longer available.
+            </p>
+
+        {% else %}
+
+            <p class="text-muted">
+                This event has already been completed.
+                Registration is no longer available.
+            </p>
+
+        {% endif %}
+
+        <a href="{% url 'event_detail' event.id %}"
+           class="btn btn-primary">
+
+            Back to Event
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,393 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+            CollegeEvents
+        {% endblock %}
+    </title>
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet"
+      href="{% static 'css/style.css' %}">
+
+    <!-- Chalk / Handwritten Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Handwritten Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Patrick+Hand&family=Schoolbell&display=swap"
+        rel="stylesheet">
+
+</head>
+
+
+<body>
+
+    <!-- Animated Background Waves -->
+    <div class="animated-waves" aria-hidden="true">
+
+        <!-- Top flowing shapes -->
+        <div class="wave wave-top wave-top-1"></div>
+        <div class="wave wave-top wave-top-2"></div>
+        <div class="wave wave-top wave-top-3"></div>
+
+        <!-- Bottom flowing shapes -->
+        <div class="wave wave-bottom wave-bottom-1"></div>
+        <div class="wave wave-bottom wave-bottom-2"></div>
+        <div class="wave wave-bottom wave-bottom-3"></div>
+
+    </div>
+
+    <!-- Navigation Bar -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+
+        <div class="container">
+
+            <a class="navbar-brand fw-bold"
+               href="{% url 'home' %}">
+                CollegeEvents
+            </a>
+
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarContent"
+                aria-controls="navbarContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+
+            <div
+                class="collapse navbar-collapse"
+                id="navbarContent"
+            >
+
+                <ul class="navbar-nav ms-auto">
+
+                    <!-- Home -->
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           href="{% url 'home' %}">
+                            Home
+                        </a>
+
+                    </li>
+
+
+                    <!-- Events -->
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           href="{% url 'event_list' %}">
+                            Events
+                        </a>
+
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                        href="{% url 'student_dashboard' %}">
+                            Dashboard
+                        </a>
+
+                    </li>
+
+
+                        <!-- User Dropdown -->
+
+                        <li class="nav-item dropdown">
+
+                            <a class="nav-link dropdown-toggle"
+                               href="#"
+                               role="button"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false">
+
+                                {{ user.username }}
+
+                            </a>
+
+
+                            <ul class="dropdown-menu">
+
+                                <!-- Student Dashboard -->
+
+                                <li>
+
+                                    <a class="dropdown-item"
+                                       href="{% url 'student_dashboard' %}">
+
+                                        My Dashboard
+
+                                    </a>
+
+                                </li>
+
+
+                                <!-- Club Dashboard -->
+
+                                {% if is_core_member %}
+
+                                    <li>
+
+                                        <a class="dropdown-item"
+                                           href="{% url 'club_dashboard' %}">
+
+                                            Club Dashboard
+
+                                        </a>
+
+                                    </li>
+
+                                {% endif %}
+
+
+                                <!-- Divider -->
+
+                                <li>
+
+                                    <hr class="dropdown-divider">
+
+                                </li>
+
+
+                                <!-- Logout -->
+
+                                <li>
+
+                                    <form method="post"
+                                          action="{% url 'logout' %}">
+
+                                        {% csrf_token %}
+
+                                        <button
+                                            type="submit"
+                                            class="dropdown-item"
+                                        >
+                                            Logout
+                                        </button>
+
+                                    </form>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+
+                    {% else %}
+
+                        <!-- Login -->
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               href="{% url 'login' %}">
+
+                                Login
+
+                            </a>
+
+                        </li>
+
+
+                        <!-- Sign Up -->
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               href="{% url 'signup' %}">
+
+                                Sign Up
+
+                            </a>
+
+                        </li>
+
+                    {% endif %}
+
+                </ul>
+
+
+                <div class="theme-toggle">
+                <button type="button"
+                        id="themeToggle"
+                        class="theme-switch"
+                        onclick="toggleTheme()">
+                    <span id="themeIcon">☀</span>
+                </button>
+            </div>
+
+
+            </div>
+
+            
+
+        </div>
+
+    </nav>
+
+
+    <!-- Page Content -->
+
+    <main>
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+
+    <!-- Footer -->
+
+    <footer class="custom-footer mt-5">
+
+        <div class="container py-4">
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <h5 class="fw-bold">
+                        CollegeEvents
+                    </h5>
+
+                    <p class="footer-muted mb-0">
+                        Discover and participate in events happening
+                        around your college.
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+
+                    <a href="{% url 'home' %}"
+                        class="footer-link me-3">
+                        Home
+                    </a>
+
+
+                    <a href="{% url 'event_list' %}"
+                       class="footer-link">
+
+                        Events
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <hr>
+
+
+            <p class="footer-muted text-center mb-0">
+
+                © 2026 CollegeEvents. All rights reserved.
+
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- Bootstrap JavaScript -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+
+    <script>
+
+    function toggleTheme() {
+
+        const currentTheme =
+            document.documentElement.getAttribute("data-theme");
+
+        const newTheme =
+            currentTheme === "dark" ? "light" : "dark";
+
+        document.documentElement.setAttribute(
+            "data-theme",
+            newTheme
+        );
+
+        localStorage.setItem("theme", newTheme);
+
+        updateThemeIcon(newTheme);
+    }
+
+
+    function updateThemeIcon(theme) {
+
+        const icon = document.getElementById("themeIcon");
+
+        if (theme === "dark") {
+            icon.textContent = "☾";
+        } else {
+            icon.textContent = "☀";
+        }
+    }
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const savedTheme =
+            localStorage.getItem("theme") || "light";
+
+        document.documentElement.setAttribute(
+            "data-theme",
+            savedTheme
+        );
+
+        updateThemeIcon(savedTheme);
+
+    });
+
+    </script>
+
+</body>
+
+
+
+</html>
+
+

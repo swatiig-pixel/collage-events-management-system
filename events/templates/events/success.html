@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ success_title }} | CollegeEvents
+{% endblock %}
+
+{% block content %}
+
+<section class="success-page">
+
+    <div class="success-card">
+
+        <!-- Confetti -->
+        <span class="confetti confetti-1"></span>
+        <span class="confetti confetti-2"></span>
+        <span class="confetti confetti-3"></span>
+        <span class="confetti confetti-4"></span>
+        <span class="confetti confetti-5"></span>
+        <span class="confetti confetti-6"></span>
+        <span class="confetti confetti-7"></span>
+        <span class="confetti confetti-8"></span>
+
+
+        <!-- Success Icon -->
+        <div class="success-icon-wrapper">
+
+            <div class="success-ring success-ring-1"></div>
+            <div class="success-ring success-ring-2"></div>
+
+            <div class="success-icon">
+
+                <svg
+                    class="success-check"
+                    viewBox="0 0 52 52"
+                    aria-hidden="true"
+                >
+                    <path d="M14 27 L22 35 L39 17" />
+                </svg>
+
+            </div>
+
+        </div>
+
+
+        <!-- Title -->
+        <h1 class="success-title">
+            {{ success_title }}
+        </h1>
+
+
+        <!-- Message -->
+        <p class="success-message">
+            {{ success_message }}
+        </p>
+
+
+        {% if event %}
+
+            <!-- Event Details -->
+            <div class="success-event-details">
+
+                <div class="success-event-header">
+
+                    <span class="success-event-label">
+                        EVENT
+                    </span>
+
+                    <span class="success-event-check">
+                        ✓
+                    </span>
+
+                </div>
+
+                <h4>
+                    {{ event.name }}
+                </h4>
+
+                <div class="success-detail-row">
+                    <span class="detail-label">Date</span>
+                    <span>{{ event.date }}</span>
+                </div>
+
+                <div class="success-detail-row">
+                    <span class="detail-label">Time</span>
+                    <span>
+                        {{ event.start_time }} -
+                        {{ event.end_time }}
+                    </span>
+                </div>
+
+                <div class="success-detail-row">
+                    <span class="detail-label">Venue</span>
+                    <span>{{ event.venue.name }}</span>
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- Continue -->
+        <a
+            href="{{ success_url }}"
+            class="btn btn-primary success-button"
+        >
+            Continue
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}
