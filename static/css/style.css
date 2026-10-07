@@ -2356,3 +2356,27 @@ main,
     object-fit: cover;
     display: block;
 }
+/* =========================================================
+   LOGIN + SIGNUP INPUT FIX
+   ========================================================= */
+
+.auth-card .form-control {
+    color: #212529 !important;
+    background-color: #ffffff !important;
+    -webkit-text-fill-color: #212529 !important;
+}
+
+.auth-card .form-control::placeholder {
+    color: #6c757d !important;
+    opacity: 0.7;
+}
+
+.auth-card .form-control:focus {
+    color: #212529 !important;
+    background-color: #ffffff !important;
+    -webkit-text-fill-color: #212529 !important;
+
+    border-color: var(--primary-color) !important;
+
+    box-shadow: 0 0 0 0.2rem rgba(3, 167, 145, 0.2) !important;
+}
