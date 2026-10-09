@@ -35,11 +35,30 @@
                                 <div class="mb-3">
 
                                     <label for="{{ field.id_for_label }}"
-                                           class="form-label">
+                                        class="form-label">
                                         {{ field.label }}
                                     </label>
 
-                                    {{ field }}
+                                    {% if field.name == "password" %}
+
+                                        <div class="position-relative">
+
+                                            {{ field }}
+
+                                            <button type="button"
+                                                    class="password-toggle"
+                                                    onclick="togglePassword('{{ field.id_for_label }}', this)"
+                                                    aria-label="Show password">
+                                                👁
+                                            </button>
+
+                                        </div>
+
+                                    {% else %}
+
+                                        {{ field }}
+
+                                    {% endif %}
 
                                     {% for error in field.errors %}
                                         <div class="text-danger small mt-1">
@@ -95,5 +114,46 @@
     </div>
 
 </section>
+
+        <p class="text-center text-muted mt-4 mb-0">
+
+            Don't have an account?
+
+            <a href="{% url 'signup' %}">
+                Sign Up
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<script>
+function togglePassword(fieldId, button) {
+
+    const passwordField = document.getElementById(fieldId);
+
+    if (passwordField.type === "password") {
+
+        passwordField.type = "text";
+        button.textContent = "🙈";
+        button.setAttribute("aria-label", "Hide password");
+
+    } else {
+
+        passwordField.type = "password";
+        button.textContent = "👁";
+        button.setAttribute("aria-label", "Show password");
+
+    }
+}
+</script>
 
 {% endblock %}
