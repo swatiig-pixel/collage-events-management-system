@@ -2452,3 +2452,80 @@ main,
     font-size: 1rem;
     line-height: 1;
 }
+
+
+/* =========================
+   CollegeEvents Loading Screen
+   ========================= */
+
+.loading-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--bg-color, #E9F5BE);
+    color: var(--text-color, #173B35);
+
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease;
+}
+
+.loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loading-content {
+    text-align: center;
+    padding: 24px;
+}
+
+.loading-title {
+    font-family: 'Cabin Sketch', cursive;
+    font-size: clamp(2.5rem, 7vw, 4rem);
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.loading-message {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.3rem;
+    margin-bottom: 24px;
+}
+
+.loading-spinner {
+    width: 46px;
+    height: 46px;
+    margin: 0 auto;
+
+    border: 5px solid var(--card-color, #c8e8bf);
+    border-top-color: var(--primary-color, #03A791);
+    border-radius: 50%;
+
+    animation: loading-spin 0.8s linear infinite;
+}
+
+@keyframes loading-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .loading-spinner {
+        animation-duration: 1.8s;
+    }
+
+    .loading-screen {
+        transition: none;
+    }
+}

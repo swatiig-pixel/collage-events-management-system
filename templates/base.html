@@ -44,6 +44,29 @@
 
 <body>
 
+    
+    <!-- Loading Screen -->
+    <div id="loadingScreen"
+         class="loading-screen"
+         role="status"
+         aria-live="polite"
+         aria-label="Loading CollegeEvents">
+
+        <div class="loading-content">
+
+            <h1 class="loading-title">UniVerse</h1>
+
+            <p class="loading-message">
+                Bringing campus events to you...
+            </p>
+
+            <div class="loading-spinner"></div>
+
+        </div>
+
+    </div>
+
+
     <!-- Animated Background Waves -->
     <div class="animated-waves" aria-hidden="true">
 
@@ -67,7 +90,7 @@
 
             <a class="navbar-brand fw-bold"
                href="{% url 'home' %}">
-                CollegeEvents
+                UniVerse
             </a>
 
 
@@ -383,6 +406,74 @@
     });
 
     </script>
+
+    
+    <script>
+    (function () {
+        const loadingScreen = document.getElementById("loadingScreen");
+
+        if (!loadingScreen) return;
+
+        function showLoadingScreen() {
+            loadingScreen.classList.remove("hidden");
+        }
+
+        function hideLoadingScreen() {
+            loadingScreen.classList.add("hidden");
+        }
+
+        // Hide the screen when this page has loaded.
+        window.addEventListener("load", function () {
+            hideLoadingScreen();
+        });
+
+        // Handle browser back/forward navigation from the cache.
+        window.addEventListener("pageshow", function () {
+            hideLoadingScreen();
+        });
+
+        // Show loading for internal page navigation.
+        document.addEventListener("click", function (event) {
+            const link = event.target.closest("a[href]");
+
+            if (!link) return;
+
+            if (
+                event.defaultPrevented ||
+                event.button !== 0 ||
+                event.ctrlKey ||
+                event.metaKey ||
+                event.shiftKey ||
+                event.altKey ||
+                link.target === "_blank" ||
+                link.hasAttribute("download")
+            ) return;
+
+            const url = new URL(link.href, window.location.href);
+
+            if (
+                url.origin !== window.location.origin ||
+                url.href === window.location.href ||
+                link.getAttribute("href").startsWith("#")
+            ) return;
+
+            showLoadingScreen();
+        });
+
+        // Show loading when a form is submitted.
+        document.addEventListener("submit", function (event) {
+            if (event.defaultPrevented) return;
+
+            const form = event.target;
+
+            if (form.target === "_blank") return;
+
+            showLoadingScreen();
+        });
+
+    })();
+    </script>
+
 
 </body>
 
