@@ -7,31 +7,21 @@
 {% block content %}
 
 <section class="py-5">
-
     <div class="container">
-
         <div class="card">
 
             <div style="height: 300px;">
-
                 {% if event.image %}
-
                     <img src="{{ event.image.url }}"
-                        class="w-100 h-100 object-fit-cover"
-                        alt="{{ event.name }}">
-
+                         class="w-100 h-100 object-fit-cover"
+                         alt="{{ event.name }}">
                 {% else %}
-
                     <div class="bg-light h-100 d-flex align-items-center justify-content-center">
-
                         <span class="text-muted fs-4">
                             Event Image
                         </span>
-
                     </div>
-
                 {% endif %}
-
             </div>
 
             <div class="card-body p-4">
@@ -45,7 +35,7 @@
                 </h1>
 
                 <p class="lead text-muted">
-                    {{ event.description|truncatewords:15}}
+                    {{ event.description|truncatewords:15 }}
                 </p>
 
                 <hr>
@@ -53,48 +43,34 @@
                 <div class="row g-3">
 
                     <div class="col-md-6">
-
                         <strong>Organized by</strong>
-
                         <p class="text-muted">
                             {{ event.club.name }}
                         </p>
-
                     </div>
 
                     <div class="col-md-6">
-
                         <strong>Venue</strong>
-
                         <p class="text-muted">
                             {{ event.venue.name }}
                         </p>
-
                     </div>
 
                     <div class="col-md-6">
-
                         <strong>Date</strong>
-
                         <p class="text-muted">
                             {{ event.date }}
                         </p>
-
                     </div>
 
                     <div class="col-md-6">
-
                         <strong>Time</strong>
-
                         <p class="text-muted">
-                            {{ event.start_time }} -
-                            {{ event.end_time }}
+                            {{ event.start_time }} - {{ event.end_time }}
                         </p>
-
                     </div>
 
                     <div class="col-md-6">
-
                         <strong>Participants</strong>
 
                         <p class="text-muted mb-1">
@@ -102,39 +78,28 @@
                         </p>
 
                         {% if remaining_seats > 0 %}
-
                             <span class="badge text-bg-success">
                                 {{ remaining_seats }} seats left
                             </span>
-
                         {% else %}
-
                             <span class="badge text-bg-danger">
                                 Registration Full
                             </span>
-
                         {% endif %}
-
                     </div>
 
                     <div class="col-md-6">
-
                         <strong>Registration Fee</strong>
 
                         {% if event.registration_fee == 0 %}
-
                             <p class="text-success fw-semibold">
                                 Free
                             </p>
-
                         {% else %}
-
                             <p class="text-muted">
                                 ₹{{ event.registration_fee }}
                             </p>
-
                         {% endif %}
-
                     </div>
 
                 </div>
@@ -150,17 +115,76 @@
                             {% if event.registration_type == "OUR_FORM" %}
 
                                 <a href="{% url 'register_event' event.id %}"
-                                class="btn btn-primary btn-lg">
+                                   class="btn btn-primary btn-lg">
                                     Register Now
                                 </a>
 
                             {% elif event.registration_type == "EXTERNAL" %}
 
                                 <a href="{{ event.registration_link }}"
-                                target="_blank"
-                                class="btn btn-primary btn-lg">
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   id="externalRegisterLink"
+                                   class="btn btn-primary btn-lg">
                                     Register Now
                                 </a>
+
+                                <div id="externalConfirmationPrompt"
+                                     class="mt-4"
+                                     hidden>
+
+                                    {% if user_confirmed_external %}
+
+                                        <p class="text-success">
+                                            You have already confirmed your registration.
+                                        </p>
+
+                                    {% else %}
+
+                                        <h5>
+                                            Have you completed your registration?
+                                        </h5>
+
+                                        <p class="text-muted">
+                                            After submitting the external form,
+                                            return here and confirm.
+                                        </p>
+
+                                        <div class="d-flex flex-column align-items-start gap-3 mt-3">
+
+                                            {% if user.is_authenticated %}
+
+                                                <form method="POST"
+                                                      action="{% url 'confirm_external_registration' event.id %}">
+                                                    {% csrf_token %}
+
+                                                    <button type="submit"
+                                                            class="btn btn-success">
+                                                        Yes, I registered
+                                                    </button>
+                                                </form>
+
+                                            {% else %}
+
+                                                <a href="{% url 'login' %}?next={{ request.path|urlencode }}"
+                                                   class="btn btn-success">
+                                                    Log in to confirm registration
+                                                </a>
+
+                                            {% endif %}
+
+                                            <a href="{{ event.registration_link }}"
+                                               target="_blank"
+                                               rel="noopener noreferrer"
+                                               class="btn btn-outline-primary">
+                                                Open Form Again
+                                            </a>
+
+                                        </div>
+
+                                    {% endif %}
+
+                                </div>
 
                             {% endif %}
 
@@ -186,21 +210,33 @@
 
                     {% endif %}
 
-
-                    <a href="{% url 'event_list' %}"
-                    class="btn btn-outline-secondary btn-lg ms-2">
-                        Back to Events
-                    </a>
+                    <div class="mt-4 pt-2">
+                        <a href="{% url 'event_list' %}"
+                        class="btn btn-outline-secondary btn-lg">
+                            Back to Events
+                        </a>
+                    </div>
 
                 </div>
 
             </div>
-
         </div>
-
     </div>
-
 </section>
 
-{% endblock %}
+<script>
+    const externalRegisterLink =
+        document.getElementById("externalRegisterLink");
 
+    const externalConfirmationPrompt =
+        document.getElementById("externalConfirmationPrompt");
+
+    if (externalRegisterLink && externalConfirmationPrompt) {
+        externalRegisterLink.addEventListener("click", function () {
+            externalConfirmationPrompt.hidden = false;
+            externalRegisterLink.hidden = true;
+        });
+    }
+</script>
+
+{% endblock %}

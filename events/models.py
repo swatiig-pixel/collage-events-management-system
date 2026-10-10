@@ -216,3 +216,29 @@ class EventRegistration(models.Model):
 
 
 
+
+class ExternalRegistrationConfirmation(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="external_registration_confirmations"
+    )
+
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.CASCADE,
+        related_name="external_confirmations"
+    )
+
+    confirmed_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "event"],
+                name="unique_external_registration_confirmation"
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.user.username} - {self.event.name}"

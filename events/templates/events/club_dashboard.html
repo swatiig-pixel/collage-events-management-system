@@ -105,6 +105,15 @@
                                 Change President
                         </a>
                     {% endif %}
+
+                    
+                    {% if club.user_is_president %}
+                        <a href="{% url 'edit_club' club.id %}"
+                        class="btn btn-outline-primary">
+                            Edit Club
+                        </a>
+                    {% endif %}
+
                     <hr>
 
 

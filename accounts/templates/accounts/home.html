@@ -223,11 +223,11 @@
                 Featured Clubs
             </h2>
 
-        <div class="d-flex flex-row flex-nowrap overflow-auto gap-3 pb-3">
+        <div class="featured-clubs-scroll d-flex gap-3 overflow-x-auto pb-3">
 
     {% for club in clubs %}
 
-            <div class="card flex-shrink-0" style="width: 420px;">
+            <div class="card featured-club-card flex-shrink-0">
 
                 <div class="row g-0">
 
@@ -235,7 +235,7 @@
 
                         {% if club.logo %}
                             <img src="{{ club.logo.url }}"
-                                class="w-100 h-100 object-fit-cover club-logo"
+                                class="club-logo"
                                 alt="{{ club.name }} logo">
                         {% else %}
 
@@ -276,13 +276,13 @@
 
                     </div>
 
-                </div>
+                </div>   
 
             </div>
 
         {% empty %}
 
-            <p>No clubs available.</p>
+            <p class="col">No clubs available.</p>
 
         {% endfor %}
 

@@ -46,6 +46,15 @@
                 {{ club.name }}
             </h1>
 
+            
+            {% if user_is_president %}
+                <a href="{% url 'edit_club' club.id %}"
+                class="btn btn-primary mt-3">
+                    Edit Club
+                </a>
+            {% endif %}
+
+
         </div>
 
     </div>

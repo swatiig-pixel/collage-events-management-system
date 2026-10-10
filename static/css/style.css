@@ -228,6 +228,19 @@ h6 {
     padding-right: 12px;
 }
 
+@media (max-width: 991.98px) {
+
+    .navbar-collapse.collapsing .theme-switch,
+    .navbar-collapse.collapsing #themeIcon {
+        visibility: hidden;
+    }
+
+    .navbar-collapse.show .theme-switch,
+    .navbar-collapse.show #themeIcon {
+        visibility: visible;
+    }
+
+}
 
 /* =========================================================
    GENERAL CARD
@@ -263,7 +276,12 @@ h6 {
 /* Club logo inside cards */
 
 .card .club-logo {
-    border-radius: 16px 0 0 16px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    border-radius: 16px 0 0 0px;
 }
 
 
@@ -2557,4 +2575,19 @@ main,
 .student-members-table td {
     background-color: var(--card-color);
     color: var(--text-color);
+}
+
+.featured-clubs-scroll {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scroll-snap-type: x proximity;
+}
+
+.featured-club-card {
+    width: clamp(220px, 30vw, 320px);;
+    max-width: 85vw;
+    flex-shrink: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    scroll-snap-align: start;
 }

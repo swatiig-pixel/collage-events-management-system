@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import EventForm, EventRegistrationForm, AddCoreMemberForm
 from .permissions import is_core_member
-from .models import Event, EventRegistration, Club,ClubMember, Category
+from .models import Event, EventRegistration, Club,ClubMember, Category,ExternalRegistrationConfirmation
 from django.db import transaction
 from django import forms
 from django.db.models import Count
@@ -11,7 +11,7 @@ from django import forms
 from .permissions import is_core_member, is_president
 from django.db.models import Q
 from accounts.models import StudentProfile
-from .forms import StudentSearchForm
+from .forms import StudentSearchForm, ClubEditForm
 from django.contrib import messages
 from django.urls import reverse
 
@@ -119,6 +119,8 @@ def event_list(request):
         }
     )
 
+
+
 def event_detail(request, event_id):
 
     event = get_object_or_404(
@@ -126,11 +128,34 @@ def event_detail(request, event_id):
         id=event_id
     )
 
-    registration_count = EventRegistration.objects.filter(
-        event=event
-    ).count()
+    if event.registration_type == "EXTERNAL":
+        registration_count = (
+            ExternalRegistrationConfirmation.objects.filter(
+                event=event
+            ).count()
+        )
+    else:
+        registration_count = EventRegistration.objects.filter(
+            event=event
+        ).count()
 
     remaining_seats = event.participants - registration_count
+
+    external_registration_count = (
+        ExternalRegistrationConfirmation.objects.filter(
+            event=event
+        ).count()
+    )
+
+    user_confirmed_external = False
+
+    if request.user.is_authenticated:
+        user_confirmed_external = (
+            ExternalRegistrationConfirmation.objects.filter(
+                user=request.user,
+                event=event
+            ).exists()
+        )
 
     return render(
         request,
@@ -139,8 +164,11 @@ def event_detail(request, event_id):
             "event": event,
             "registration_count": registration_count,
             "remaining_seats": remaining_seats,
+            "external_registration_count": external_registration_count,
+            "user_confirmed_external": user_confirmed_external,
         }
     )
+
 
 
 @login_required
@@ -229,6 +257,39 @@ def register_event(request, event_id):
             "event": event
         }
     )
+
+
+
+@login_required
+def confirm_external_registration(request, event_id):
+
+    if request.method != "POST":
+        return redirect("event_detail", event_id=event_id)
+
+    event = get_object_or_404(
+        Event,
+        id=event_id,
+        # Only external-registration events use this confirmation.
+        registration_type="EXTERNAL"
+    )
+
+    confirmation, created = ExternalRegistrationConfirmation.objects.get_or_create(
+        user=request.user,
+        event=event
+    )
+
+    if created:
+        messages.success(
+            request,
+            f"Your external registration confirmation for {event.name} has been recorded."
+        )
+    else:
+        messages.info(
+            request,
+            "You have already confirmed your registration for this event."
+        )
+
+    return redirect("event_detail", event_id=event.id)
 
 
 
@@ -426,6 +487,7 @@ def student_dashboard(request):
         }
     )
 
+
 def club_detail(request, club_id):
 
     club = get_object_or_404(
@@ -441,14 +503,25 @@ def club_detail(request, club_id):
         "start_time"
     )
 
+    user_is_president = False
+
+    if request.user.is_authenticated:
+        user_is_president = ClubMember.objects.filter(
+            user=request.user,
+            club=club,
+            is_president=True
+        ).exists()
+
     return render(
         request,
         "events/club_detail.html",
         {
             "club": club,
-            "events": events
+            "events": events,
+            "user_is_president": user_is_president,
         }
     )
+
 
 
 @login_required
@@ -834,3 +907,47 @@ def confirm_president_change(request, club_id, student_id):
         )
 
         return redirect("club_dashboard")
+
+
+
+@login_required
+def edit_club(request, club_id):
+    club = get_object_or_404(Club, id=club_id)
+
+    # Check whether the logged-in user is this club's president
+    is_president = ClubMember.objects.filter(
+        user=request.user,
+        club=club,
+        is_president=True
+    ).exists()
+
+    if not is_president:
+        messages.error(
+            request,
+            "Only the club president can edit club details."
+        )
+        return redirect("club_detail", club_id=club.id)
+
+    if request.method == "POST":
+        form = ClubEditForm(
+            request.POST,
+            request.FILES,
+            instance=club
+        )
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Club details updated successfully.")
+            return redirect("club_detail", club_id=club.id)
+
+    else:
+        form = ClubEditForm(instance=club)
+
+    return render(
+        request,
+        "events/edit_club.html",
+        {
+            "form": form,
+            "club": club,
+        }
+    )

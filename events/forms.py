@@ -211,3 +211,26 @@ class StudentSearchForm(forms.Form):
 
 
 
+from django import forms
+from .models import Club
+
+
+class ClubEditForm(forms.ModelForm):
+    class Meta:
+        model = Club
+        fields = ["name", "description", "logo"]
+        widgets = {
+            "name": forms.TextInput(attrs={
+                "class": "form-control",
+            }),
+            "description": forms.Textarea(attrs={
+                "class": "form-control",
+                "rows": 4,
+            }),
+            "logo": forms.ClearableFileInput(attrs={
+                "class": "form-control",
+            }),
+        }
+
+
+

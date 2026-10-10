@@ -60,6 +60,11 @@ urlpatterns = [
         name="change_president"
     ),
     path(
+      "club/<int:club_id>/edit-club/",
+      views.edit_club,
+      name="edit_club"
+    ),
+    path(
         "club/<int:club_id>/change-president/<int:student_id>/",
         views.confirm_president_change,
         name="confirm_president_change"
@@ -80,9 +85,9 @@ urlpatterns = [
       name="club_detail"
     ),
     path(
-      "club/<int:club_id>/",
-      views.club_detail,
-      name="club_detail"
+        "external-registration/<int:event_id>/confirm/",
+        views.confirm_external_registration,
+        name="confirm_external_registration",
     ),
 
 ]
