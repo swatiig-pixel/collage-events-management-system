@@ -2591,3 +2591,29 @@ main,
     overflow: hidden;
     scroll-snap-align: start;
 }
+/* Keep the footer at the bottom on short pages */
+
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+}
+
+body.page-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body.page-layout > main.page-content {
+    flex: 1 0 auto;
+}
+
+.navbar-brand {
+    font-family: 'Cabin Sketch', cursive;
+    font-weight: 10000;
+    font-size: 1.75rem;
+}
+
+
+
