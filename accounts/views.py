@@ -23,6 +23,10 @@ def home(request):
             date=now.date(),
             start_time__gte=now.time()
         )
+    ).select_related(
+        "category",
+        "club",
+        "venue"
     ).order_by(
         "date",
         "start_time"
