@@ -413,32 +413,39 @@
 
     </script>
 
-    
     <script>
     (function () {
         const loadingScreen = document.getElementById("loadingScreen");
 
         if (!loadingScreen) return;
 
+        let loadingTimer = null;
+        let navigationStarted = false;
+
         function showLoadingScreen() {
-            loadingScreen.classList.remove("hidden");
+            clearTimeout(loadingTimer);
+
+            loadingTimer = setTimeout(function () {
+                if (navigationStarted) {
+                    loadingScreen.classList.remove("hidden");
+                }
+            }, 500);
         }
 
         function hideLoadingScreen() {
+            clearTimeout(loadingTimer);
+            loadingTimer = null;
+            navigationStarted = false;
             loadingScreen.classList.add("hidden");
         }
 
-        // Hide the screen when this page has loaded.
-        window.addEventListener("load", function () {
-            hideLoadingScreen();
-        });
+        // Hide the overlay when the page finishes loading.
+        window.addEventListener("load", hideLoadingScreen);
 
-        // Handle browser back/forward navigation from the cache.
-        window.addEventListener("pageshow", function () {
-            hideLoadingScreen();
-        });
+        // Keep it hidden when returning through browser history.
+        window.addEventListener("pageshow", hideLoadingScreen);
 
-        // Show loading for internal page navigation.
+        // Handle internal navigation links.
         document.addEventListener("click", function (event) {
             const link = event.target.closest("a[href]");
 
@@ -463,10 +470,11 @@
                 link.getAttribute("href").startsWith("#")
             ) return;
 
+            navigationStarted = true;
             showLoadingScreen();
         });
 
-        // Show loading when a form is submitted.
+        // Handle form submissions.
         document.addEventListener("submit", function (event) {
             if (event.defaultPrevented) return;
 
@@ -474,12 +482,12 @@
 
             if (form.target === "_blank") return;
 
+            navigationStarted = true;
             showLoadingScreen();
         });
 
     })();
     </script>
-
 
 </body>
 
